@@ -4,8 +4,11 @@ import android.content.Context;
 
 import com.ifyou.nowincinema.di.modules.CinemaModule;
 import com.ifyou.nowincinema.di.modules.ContextModule;
+import com.ifyou.nowincinema.di.modules.NavigationModule;
 import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
+import com.ifyou.nowincinema.ui.activity.MainActivity;
+import com.ifyou.nowincinema.ui.fragment.MovieListFragment;
 
 import javax.inject.Singleton;
 
@@ -16,16 +19,19 @@ import dagger.Component;
  **/
 
 @Singleton
-@Component(modules = {ContextModule.class, CinemaModule.class})
+@Component(modules = {
+        ContextModule.class,
+        CinemaModule.class,
+        NavigationModule.class
+})
 public interface AppComponent {
+
     Context getContext();
+
     CinemaService getCinemaService();
 
     void inject(MovieListPresenter movieListPresenter);
 
-    /*Bus getBus();
+    void inject (MainActivity mainActivity);
 
-    void inject(SignInPresenter presenter);
-    void inject(MovieListPresenter movieListPresenter);
-    void inject(RepositoryLikesPresenter repositoryLikesPresenter);*/
 }

@@ -21,6 +21,7 @@ import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.ifyou.nowincinema.ui.adapter.GridSpacingItemDecoration;
+import com.ifyou.nowincinema.ui.adapter.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.NewMovieListAdapter;
 
 import java.util.List;
@@ -72,6 +73,11 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getContext(), R.dimen.item_offset));
 
         mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
+
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
+                (recyclerView, pos, v) ->
+                        mMovieListPresenter.clickItem(pos)
+        );
     }
 
     @Override

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Now in cinema</string>
+    <string name="app_detail">Detail of cinema</string>
 </resources>

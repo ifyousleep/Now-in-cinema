@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class MovieListPresenter extends MvpPresenter<MovieListView> {
@@ -26,11 +27,16 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     @Inject
     CinemaService mCinemaService;
 
+    @Inject
+    Router router;
+
     private boolean mIsInLoading;
     private Disposable subscription = Disposables.empty();
     private Integer mPage = 1;
     private Integer mCountList = 0;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
+
+    public static final String DETAILS_SCREEN = "DetailsFragment";
 
     public MovieListPresenter() {
         CinemaApp.getAppComponent().inject(this);
@@ -83,6 +89,10 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     private void onLoadingFinish() {
         mIsInLoading = false;
         getViewState().hideProgressBar();
+    }
+
+    public void clickItem(int id) {
+        router.navigateTo(DETAILS_SCREEN, id);
     }
 
     private void onLoadingSuccess(Response response) {
