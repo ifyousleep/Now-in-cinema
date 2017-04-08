@@ -64,6 +64,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(R.string.app_name);
         mAdapter = new NewMovieListAdapter();
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);

@@ -6,6 +6,7 @@ import com.ifyou.nowincinema.di.modules.CinemaModule;
 import com.ifyou.nowincinema.di.modules.ContextModule;
 import com.ifyou.nowincinema.di.modules.NavigationModule;
 import com.ifyou.nowincinema.model.CinemaService;
+import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
 import com.ifyou.nowincinema.ui.activity.MainActivity;
 import com.ifyou.nowincinema.ui.fragment.MovieListFragment;
@@ -33,5 +34,7 @@ public interface AppComponent {
     void inject(MovieListPresenter movieListPresenter);
 
     void inject (MainActivity mainActivity);
+
+    void inject (DetailsPresenter detailsPresenter);
 
 }

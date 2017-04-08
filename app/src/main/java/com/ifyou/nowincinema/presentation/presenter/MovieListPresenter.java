@@ -6,10 +6,10 @@ import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.model.Response;
 import com.ifyou.nowincinema.model.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
+import com.ifyou.nowincinema.ui.Screens;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +35,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     private Integer mPage = 1;
     private Integer mCountList = 0;
     private List<ResultsItem> mResultsItems = new ArrayList<>();
-
-    public static final String DETAILS_SCREEN = "DetailsFragment";
+    private Long mTime;
 
     public MovieListPresenter() {
         CinemaApp.getAppComponent().inject(this);
@@ -52,6 +51,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        mTime = getUnixTimestamp();
         loadData(mPage);
     }
 
@@ -70,7 +70,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         }
         mIsInLoading = true;
 
-        final Observable<Response> observable = mCinemaService.getMovieList(String.valueOf(getUnixTimestamp()), page);
+        final Observable<Response> observable = mCinemaService.getMovieList(String.valueOf(mTime), page);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
@@ -92,7 +92,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     }
 
     public void clickItem(int id) {
-        router.navigateTo(DETAILS_SCREEN, id);
+        router.navigateTo(Screens.DETAILS_SCREEN, mResultsItems.get(id).getId());
     }
 
     private void onLoadingSuccess(Response response) {

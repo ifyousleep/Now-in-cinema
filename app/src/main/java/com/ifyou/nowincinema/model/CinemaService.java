@@ -20,4 +20,7 @@ public class CinemaService {
         return mCinemaApi.getMovies(actual, page);
     }
 
+    public Observable<Movie> getAboutMovie(Integer id) {
+        return mCinemaApi.getAboutMovie(id);
+    }
 }

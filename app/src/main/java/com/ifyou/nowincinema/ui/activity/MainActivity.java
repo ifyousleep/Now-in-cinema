@@ -1,7 +1,6 @@
 package com.ifyou.nowincinema.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
@@ -9,14 +8,13 @@ import android.widget.Toast;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.presentation.view.MainView;
 import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
-
-import com.arellomobile.mvp.MvpAppCompatActivity;
-
-import com.ifyou.nowincinema.R;
-
-import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.DetailsFragment;
 import com.ifyou.nowincinema.ui.fragment.MovieListFragment;
+import com.ifyou.nowincinema.R;
+
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import javax.inject.Inject;
 
@@ -35,14 +33,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @BindView(R.id.activity_main_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.activity_main_appbar)
-    AppBarLayout mAppbar;
 
     @Inject
     NavigatorHolder navigatorHolder;
-
-    public static final String LIST_SCREEN = "MovieListFragment";
-    public static final String DETAILS_SCREEN = "DetailsFragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +45,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-        if (savedInstanceState == null)
-            navigator.applyCommand(new Replace(LIST_SCREEN, 1));
+        if (savedInstanceState == null) {
+            navigator.applyCommand(new Replace(Screens.LIST_SCREEN, 1));
+        }
         Timber.d("Activity Created");
     }
 
@@ -62,10 +56,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         @Override
         protected Fragment createFragment(String screenKey, Object data) {
             switch (screenKey) {
-                case LIST_SCREEN:
+                case Screens.LIST_SCREEN:
                     return MovieListFragment.newInstance();
-                case DETAILS_SCREEN:
-                    showAppBar(R.string.app_detail);
+                case Screens.DETAILS_SCREEN:
                     return DetailsFragment.newInstance((int) data);
                 default:
                     throw new RuntimeException("Unknown screen key!");
@@ -102,15 +95,9 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                 .findFragmentById(R.id.activity_main_container);
         if (fragment != null
                 && fragment instanceof DetailsFragment) {
-            showAppBar(R.string.app_name);
             super.onBackPressed();
         } else {
             super.onBackPressed();
         }
-    }
-
-    private void showAppBar(Integer res) {
-        mAppbar.setExpanded(true);
-        mToolbar.setTitle(res);
     }
 }

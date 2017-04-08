@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Сейчас в кино</string>
+    <string name="app_detail">Информация о фильме</string>
+
+    <string name="imdb">IMDB - %1$s</string>
+    <string name="country_year">%1$s %2$s</string>
+    <string name="director">Режиссер: %1$s</string>
+    <string name="stars">В ролях: %1$s</string>
+</resources>

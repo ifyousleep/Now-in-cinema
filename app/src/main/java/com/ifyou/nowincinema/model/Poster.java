@@ -1,8 +1,6 @@
 package com.ifyou.nowincinema.model;
 
-import java.io.Serializable;
-
-public class Poster implements Serializable {
+public class Poster{
 	private String image;
 	private Source source;
 

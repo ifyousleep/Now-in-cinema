@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">Now in cinema</string>
-    <string name="app_detail">Detail of cinema</string>
+    <string name="app_name">Now in the cinema</string>
+    <string name="app_detail">About the film</string>
+
+    <string name="imdb">IMDB - %1$s</string>
+    <string name="country_year">%1$s %2$s</string>
+    <string name="director">Director: %1$s</string>
+    <string name="stars">Stars: %1$s</string>
 </resources>

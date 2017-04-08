@@ -1,18 +1,8 @@
 package com.ifyou.nowincinema.model;
 
-import java.io.Serializable;
-
-public class Source implements Serializable {
-	private String name;
+public class Source{
 	private String link;
-
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getName(){
-		return name;
-	}
+	private String name;
 
 	public void setLink(String link){
 		this.link = link;
@@ -22,12 +12,20 @@ public class Source implements Serializable {
 		return link;
 	}
 
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public String getName(){
+		return name;
+	}
+
 	@Override
  	public String toString(){
 		return 
 			"Source{" + 
-			"name = '" + name + '\'' + 
-			",link = '" + link + '\'' + 
+			"link = '" + link + '\'' + 
+			",name = '" + name + '\'' + 
 			"}";
 		}
 }
