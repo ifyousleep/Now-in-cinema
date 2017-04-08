@@ -1,8 +1,6 @@
 package com.ifyou.nowincinema.model;
 
-import java.io.Serializable;
-
-public class ResultsItem implements Serializable {
+public class ResultsItem {
 	private int id;
 	private String title;
 	private Poster poster;

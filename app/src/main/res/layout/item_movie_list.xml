@@ -9,7 +9,8 @@
         android:layout_height="160dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:transitionName="photo" />
+        android:transitionName="image"
+        />
 
     <TextView
         android:id="@+id/textView"

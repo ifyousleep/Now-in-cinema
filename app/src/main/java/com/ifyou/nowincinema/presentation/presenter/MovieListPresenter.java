@@ -1,5 +1,6 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
+import com.ifyou.nowincinema.ui.fragment.DataObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
@@ -20,6 +21,7 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import ru.terrakok.cicerone.Router;
+import timber.log.Timber;
 
 @InjectViewState
 public class MovieListPresenter extends MvpPresenter<MovieListView> {
@@ -91,8 +93,11 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         getViewState().hideProgressBar();
     }
 
-    public void clickItem(int id) {
-        router.navigateTo(Screens.DETAILS_SCREEN, mResultsItems.get(id).getId());
+    public void clickItem(DataObject dataObject) {
+        dataObject.setUrl(mResultsItems.get(dataObject.getInteger()).getPoster().getImage());
+        dataObject.setInteger(mResultsItems.get(dataObject.getInteger()).getId());
+        Timber.d("ID = " + dataObject.getInteger());
+        router.navigateTo(Screens.DETAILS_SCREEN, dataObject);
     }
 
     private void onLoadingSuccess(Response response) {

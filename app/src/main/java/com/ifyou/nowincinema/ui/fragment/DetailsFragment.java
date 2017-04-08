@@ -3,6 +3,7 @@ package com.ifyou.nowincinema.ui.fragment;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
+import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,10 +51,10 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     private Unbinder mUnbinder;
 
-    public static DetailsFragment newInstance(int id) {
+    public static DetailsFragment newInstance(DataObject dataObject) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
-        args.putInt("id", id);
+        args.putSerializable("data", dataObject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,6 +64,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
                              final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_details, container, false);
         mUnbinder = ButterKnife.bind(this, v);
+        setExitTransition(new Fade());
         return v;
     }
 
@@ -70,7 +72,15 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.app_detail);
-        mDetailsPresenter.loadData(getArguments().getInt("id"));
+        DataObject dataObject = (DataObject) getArguments().getSerializable("data");
+        if (dataObject != null) {
+            if (savedInstanceState == null)
+                mDetailsPresenter.loadData(dataObject);
+            Glide.with(getContext())
+                    .load(dataObject.getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(poster);
+        }
     }
 
     @Override
@@ -81,10 +91,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         textImdb.setText(String.format(getString(R.string.imdb), String.valueOf(movie.getImdb_rating())));
         textDirector.setText(String.format(getString(R.string.director), movie.getDirector()));
         textStars.setText(String.format(getString(R.string.stars), movie.getStars()));
-        Glide.with(getContext())
-                .load(movie.getPoster().getImage())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(poster);
     }
 
     @SuppressWarnings("deprecation")
