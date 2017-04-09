@@ -9,7 +9,6 @@
         android:layout_height="160dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:transitionName="image"
         />
 
     <TextView

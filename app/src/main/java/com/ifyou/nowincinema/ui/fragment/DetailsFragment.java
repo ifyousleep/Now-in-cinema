@@ -1,9 +1,11 @@
 package com.ifyou.nowincinema.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.Spanned;
-import android.transition.Fade;
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.ifyou.nowincinema.model.Movie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
@@ -51,12 +55,22 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     private Unbinder mUnbinder;
 
-    public static DetailsFragment newInstance(DataObject dataObject) {
+    public static DetailsFragment newInstance(TransitionObject transitionObject) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("data", dataObject);
+        args.putSerializable("data", transitionObject);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        postponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+            setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+        }
     }
 
     @Override
@@ -64,7 +78,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
                              final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_details, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        setExitTransition(new Fade());
         return v;
     }
 
@@ -72,14 +85,27 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.app_detail);
-        DataObject dataObject = (DataObject) getArguments().getSerializable("data");
-        if (dataObject != null) {
-            if (savedInstanceState == null)
-                mDetailsPresenter.loadData(dataObject);
+        TransitionObject transitionObject = (TransitionObject) getArguments().getSerializable("data");
+        if (transitionObject != null) {
             Glide.with(getContext())
-                    .load(dataObject.getUrl())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(transitionObject.getUrl())
+                    .dontAnimate()
+                    .listener(new RequestListener<String, GlideDrawable>() {
+                        @Override
+                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                            startPostponedEnterTransition();
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                            startPostponedEnterTransition();
+                            return false;
+                        }
+                    })
                     .into(poster);
+            if (savedInstanceState == null)
+                mDetailsPresenter.loadData(transitionObject);
         }
     }
 

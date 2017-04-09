@@ -8,7 +8,7 @@ import com.ifyou.nowincinema.model.Movie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.ifyou.nowincinema.ui.fragment.DataObject;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import javax.inject.Inject;
 
@@ -36,13 +36,13 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
         }
     }
 
-    public void loadData(DataObject dataObject) {
+    public void loadData(TransitionObject transitionObject) {
         if (mIsInLoading) {
             return;
         }
         mIsInLoading = true;
 
-        final Observable<Movie> observable = mCinemaService.getAboutMovie(dataObject.getInteger());
+        final Observable<Movie> observable = mCinemaService.getAboutMovie(transitionObject.getInteger());
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }

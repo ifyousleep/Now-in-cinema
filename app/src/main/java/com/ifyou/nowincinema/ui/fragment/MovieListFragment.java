@@ -77,7 +77,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->
-                        mMovieListPresenter.clickItem(new DataObject(v.findViewById(R.id.image), pos, ""))
+                        mMovieListPresenter.clickItem(new TransitionObject(v.findViewById(R.id.image), pos, ""))
         );
     }
 

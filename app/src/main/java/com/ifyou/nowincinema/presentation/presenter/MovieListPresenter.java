@@ -1,6 +1,6 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
-import com.ifyou.nowincinema.ui.fragment.DataObject;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
@@ -93,11 +93,11 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         getViewState().hideProgressBar();
     }
 
-    public void clickItem(DataObject dataObject) {
-        dataObject.setUrl(mResultsItems.get(dataObject.getInteger()).getPoster().getImage());
-        dataObject.setInteger(mResultsItems.get(dataObject.getInteger()).getId());
-        Timber.d("ID = " + dataObject.getInteger());
-        router.navigateTo(Screens.DETAILS_SCREEN, dataObject);
+    public void clickItem(TransitionObject transitionObject) {
+        transitionObject.setUrl(mResultsItems.get(transitionObject.getInteger()).getPoster().getImage());
+        transitionObject.setInteger(mResultsItems.get(transitionObject.getInteger()).getId());
+        Timber.d("ID = " + transitionObject.getInteger());
+        router.navigateTo(Screens.DETAILS_SCREEN, transitionObject);
     }
 
     private void onLoadingSuccess(Response response) {

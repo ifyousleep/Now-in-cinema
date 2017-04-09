@@ -1,19 +1,16 @@
 package com.ifyou.nowincinema.ui.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.widget.Toast;
 
-import com.ifyou.nowincinema.ui.fragment.DataObject;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.presentation.view.MainView;
 import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.DetailsFragment;
-import com.ifyou.nowincinema.ui.fragment.DetailsTransition;
 import com.ifyou.nowincinema.ui.fragment.MovieListFragment;
 import com.ifyou.nowincinema.R;
 
@@ -65,13 +62,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                 case Screens.LIST_SCREEN:
                     return MovieListFragment.newInstance();
                 case Screens.DETAILS_SCREEN:
-                    DetailsFragment detailsFragment = DetailsFragment.newInstance(((DataObject) data));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        detailsFragment.setEnterTransition(new Fade());
-                        detailsFragment.setSharedElementEnterTransition(new DetailsTransition());
-                        detailsFragment.setSharedElementReturnTransition(new DetailsTransition());
-                    }
-                    return detailsFragment;
+                    return DetailsFragment.newInstance(((TransitionObject) data));
                 default:
                     throw new RuntimeException("Unknown screen key!");
             }
@@ -96,10 +87,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                     unknownScreen(command);
                     return;
                 }
-                DataObject dataObject = (DataObject) forward.getTransitionData();
+                TransitionObject transitionObject = (TransitionObject) forward.getTransitionData();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .addSharedElement(dataObject.getView(), "image")
+                        .addSharedElement(transitionObject.getView(), "image")
                         .replace(R.id.activity_main_container, fragment)
                         .addToBackStack(forward.getScreenKey())
                         .commit();
