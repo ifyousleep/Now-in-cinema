@@ -1,6 +1,8 @@
 package com.ifyou.nowincinema.di.modules;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import javax.inject.Singleton;
 
@@ -23,5 +25,11 @@ public class ContextModule {
     @Singleton
     public Context provideContext() {
         return mContext;
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences provideSharedPrefs() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 }

@@ -1,8 +1,12 @@
 package com.ifyou.nowincinema.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ifyou.nowincinema.ui.fragment.TouchImageFragment;
@@ -41,8 +45,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Inject
     NavigatorHolder navigatorHolder;
 
+    @Inject
+    SharedPreferences mSharedPrefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         CinemaApp.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -52,16 +60,17 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
         if (savedInstanceState == null) {
             navigator.applyCommand(new Replace(Screens.LIST_SCREEN, 1));
         }
-        Timber.d("Activity Created");
+        Timber.d(mSharedPrefs.getString("city", "ifyousleep"));
     }
 
     private Navigator navigator = new SupportFragmentNavigator(getSupportFragmentManager(),
             R.id.activity_main_container) {
         @Override
         protected Fragment createFragment(String screenKey, Object data) {
+            String myCity = mSharedPrefs.getString("my_city", "");
             switch (screenKey) {
                 case Screens.LIST_SCREEN:
-                    return MovieListFragment.newInstance();
+                    return MovieListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
                 case Screens.DETAILS_SCREEN:
                     return DetailsFragment.newInstance(((TransitionObject) data));
                 case Screens.TOUCH_SCREEN:
@@ -113,5 +122,43 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     protected void onPause() {
         super.onPause();
         navigatorHolder.removeNavigator();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_city:
+                mMainPresenter.showDialog();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public void showDialog() {
+        String[] mCityArray = getResources().getStringArray(R.array.city_id);
+        String[] mCityNameArray = getResources().getStringArray(R.array.city_actions);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(R.string.city)
+                .setItems(R.array.city_actions, (dialog, which) -> {
+                    mSharedPrefs
+                            .edit()
+                            .putString("city", mCityArray[which])
+                            .putString("my_city", mCityNameArray[which])
+                            .apply();
+                    dialog.dismiss();
+                    mMainPresenter.updateCity();
+                });
+        builder
+                .create()
+                .show();
     }
 }

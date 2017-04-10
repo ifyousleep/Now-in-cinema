@@ -16,7 +16,8 @@ public interface CinemaApi {
 
     @GET("/public-api/v1.3/movies/")
     Observable<Response> getMovies(@Query("actual_since") String actual_since,
-                                   @Query("page") Integer page);
+                                   @Query("page") Integer page,
+                                   @Query("location") String location);
 
     @GET("/public-api/v1.3/movies/{movie_id}/")
     Observable<Movie> getAboutMovie(@Path("movie_id") Integer movie_id);

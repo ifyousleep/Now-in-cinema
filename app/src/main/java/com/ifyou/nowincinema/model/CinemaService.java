@@ -16,8 +16,8 @@ public class CinemaService {
         mCinemaApi = cinemaApi;
     }
 
-    public Observable<Response> getMovieList(String actual, Integer page) {
-        return mCinemaApi.getMovies(actual, page);
+    public Observable<Response> getMovieList(String actual, Integer page, String location) {
+        return mCinemaApi.getMovies(actual, page, location);
     }
 
     public Observable<Movie> getAboutMovie(Integer id) {

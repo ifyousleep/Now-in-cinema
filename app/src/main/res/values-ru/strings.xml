@@ -8,4 +8,33 @@
     <string name="country_year">%1$s %2$s</string>
     <string name="director">Режиссер: %1$s</string>
     <string name="stars">В ролях: %1$s</string>
+    <string name="city">Город</string>
+
+    <string-array name="city_actions">
+        <item>Все города</item>
+        <item>St. Petersburg</item>
+        <item>Moscow</item>
+        <item>Novosibirsk</item>
+        <item>Ekaterinburg</item>
+        <item>Nizhny Novgorod</item>
+        <item>Kazan</item>
+        <item>Samara</item>
+        <item>Krasnodar</item>
+        <item>Ufa</item>
+        <item>Krasnoyarsk</item>
+    </string-array>
+
+    <string-array name="city_id">
+        <item> </item>
+        <item>spb</item>
+        <item>msk</item>
+        <item>nsk</item>
+        <item>ekb</item>
+        <item>nnv</item>
+        <item>kzn</item>
+        <item>smr</item>
+        <item>krd</item>
+        <item>ufa</item>
+        <item>krasnoyarsk</item>
+    </string-array>
 </resources>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.ifyou.nowincinema.model.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
@@ -46,9 +47,17 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     private GridLayoutManager mGridLayoutManager;
     private View mFooter;
 
-    public static MovieListFragment newInstance() {
+    @ProvidePresenter
+    MovieListPresenter provideMovieListPresenter() {
+        String mCity = getArguments().getString("city");
+        return new MovieListPresenter(mCity);
+    }
+
+    public static MovieListFragment newInstance(String city, String myCity) {
         MovieListFragment fragment = new MovieListFragment();
         Bundle args = new Bundle();
+        args.putString("city", city);
+        args.putString("my_city", myCity);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,7 +73,11 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.app_name);
+        String myCity = getArguments().getString("my_city", "");
+        if (myCity.length() > 0)
+            getActivity().setTitle(myCity);
+        else
+            getActivity().setTitle(R.string.app_name);
         mAdapter = new NewMovieListAdapter();
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);

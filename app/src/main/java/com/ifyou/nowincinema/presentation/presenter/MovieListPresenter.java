@@ -39,8 +39,11 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     private List<ResultsItem> mResultsItems = new ArrayList<>();
     private Long mTime;
 
-    public MovieListPresenter() {
+    private String mCity;
+
+    public MovieListPresenter(String city) {
         CinemaApp.getAppComponent().inject(this);
+        mCity = city;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         super.onFirstViewAttach();
         mTime = getUnixTimestamp();
         loadData(mPage);
+        Timber.d(mCity);
     }
 
     public void onLastItemViewed() {
@@ -72,7 +76,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         }
         mIsInLoading = true;
 
-        final Observable<Response> observable = mCinemaService.getMovieList(String.valueOf(mTime), page);
+        final Observable<Response> observable = mCinemaService.getMovieList(String.valueOf(mTime), page, mCity);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
