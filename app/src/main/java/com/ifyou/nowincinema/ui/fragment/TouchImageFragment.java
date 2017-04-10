@@ -1,18 +1,16 @@
 package com.ifyou.nowincinema.ui.fragment;
 
-import android.os.Build;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.ifyou.nowincinema.presentation.view.TouchImageView;
 import com.ifyou.nowincinema.presentation.presenter.TouchImagePresenter;
 
@@ -25,6 +23,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class TouchImageFragment extends MvpAppCompatFragment implements TouchImageView {
 
@@ -33,6 +32,8 @@ public class TouchImageFragment extends MvpAppCompatFragment implements TouchIma
 
     @BindView(R.id.touch_image)
     ImageView mTouchImageView;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     private Unbinder mUnbinder;
 
@@ -42,16 +43,6 @@ public class TouchImageFragment extends MvpAppCompatFragment implements TouchIma
         args.putSerializable("data", transitionObject);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        postponeEnterTransition();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
-            setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
-        }
     }
 
     @Override
@@ -65,37 +56,38 @@ public class TouchImageFragment extends MvpAppCompatFragment implements TouchIma
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.app_detail);
+        getActivity().setTitle(R.string.app_poster);
         TransitionObject transitionObject = (TransitionObject) getArguments().getSerializable("data");
         if (transitionObject != null) {
             mTouchImagePresenter.setImage(transitionObject.getUrl());
+            Timber.d(transitionObject.getUrl());
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void setImage(String url) {
         Glide.with(getContext())
                 .load(url)
-                .dontAnimate()
-                .listener(new RequestListener<String, GlideDrawable>() {
+                .asBitmap()
+                .into(new BitmapImageViewTarget(mTouchImageView) {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                        startPostponedEnterTransition();
-                        return false;
+                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        mTouchImagePresenter.hideProgressBar();
+                        mTouchImageView.setImageBitmap(drawable);
                     }
-
-                    @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        startPostponedEnterTransition();
-                        return false;
-                    }
-                })
-                .into(mTouchImageView);
+                });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
     }
 }

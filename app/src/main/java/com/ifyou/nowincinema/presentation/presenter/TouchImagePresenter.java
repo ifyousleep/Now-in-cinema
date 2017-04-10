@@ -11,4 +11,8 @@ public class TouchImagePresenter extends MvpPresenter<TouchImageView> {
     public void setImage(String url) {
         getViewState().setImage(url);
     }
+
+    public void hideProgressBar() {
+        getViewState().hideProgressBar();
+    }
 }

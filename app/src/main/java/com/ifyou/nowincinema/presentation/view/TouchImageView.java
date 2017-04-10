@@ -5,4 +5,6 @@ import com.arellomobile.mvp.MvpView;
 public interface TouchImageView extends MvpView {
 
     void setImage(String image);
+
+    void hideProgressBar();
 }
