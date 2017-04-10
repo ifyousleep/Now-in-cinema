@@ -25,6 +25,10 @@ public class TransitionObject implements Serializable {
         return view;
     }
 
+    public void setView (View view) {
+        this.view = view;
+    }
+
     public Integer getInteger() {
         return integer;
     }

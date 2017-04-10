@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.ifyou.nowincinema.ui.fragment.TouchImageFragment;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.presentation.view.MainView;
@@ -63,6 +64,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
                     return MovieListFragment.newInstance();
                 case Screens.DETAILS_SCREEN:
                     return DetailsFragment.newInstance(((TransitionObject) data));
+                case Screens.TOUCH_SCREEN:
+                    return TouchImageFragment.newInstance(((TransitionObject) data));
                 default:
                     throw new RuntimeException("Unknown screen key!");
             }

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.model.ResultsItem;
 
@@ -59,6 +60,7 @@ public class NewMovieListAdapter extends RecyclerBindableAdapter<ResultsItem, Ne
             Glide.with(imageView.getContext())
                     .load(item.getPoster().getImage())
                     .dontAnimate()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
             ViewCompat.setTransitionName(imageView, item.getId() + "_image");
         }

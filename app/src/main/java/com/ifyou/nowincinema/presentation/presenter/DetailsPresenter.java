@@ -8,6 +8,7 @@ import com.ifyou.nowincinema.model.Movie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class DetailsPresenter extends MvpPresenter<DetailsView> {
@@ -22,11 +24,18 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
     @Inject
     CinemaService mCinemaService;
 
+    @Inject
+    Router router;
+
     private boolean mIsInLoading;
     private Disposable subscription = Disposables.empty();
 
     public DetailsPresenter() {
         CinemaApp.getAppComponent().inject(this);
+    }
+
+    public void showTouch(TransitionObject transitionObject) {
+        router.navigateTo(Screens.TOUCH_SCREEN, transitionObject);
     }
 
     @Override

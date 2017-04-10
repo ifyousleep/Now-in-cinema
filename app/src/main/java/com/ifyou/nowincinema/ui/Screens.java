@@ -8,5 +8,5 @@ public class Screens {
 
     public static final String LIST_SCREEN = "MovieListFragment";
     public static final String DETAILS_SCREEN = "DetailsFragment";
-
+    public static final String TOUCH_SCREEN = "TouchFragment";
 }
