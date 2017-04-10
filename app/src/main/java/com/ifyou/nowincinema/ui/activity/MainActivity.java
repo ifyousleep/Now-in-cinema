@@ -144,6 +144,10 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
 
     @Override
     public void showDialog() {
+        enableDialog();
+    }
+
+    private void enableDialog() {
         String[] mCityArray = getResources().getStringArray(R.array.city_id);
         String[] mCityNameArray = getResources().getStringArray(R.array.city_actions);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Сейчас в кино</string>
     <string name="app_detail">Информация о фильме</string>
-    <string name="app_poster">Афиша</string>
+    <string name="app_poster">Постер фильма</string>
 
     <string name="imdb">IMDB - %1$s</string>
     <string name="country_year">%1$s %2$s</string>
@@ -12,16 +12,16 @@
 
     <string-array name="city_actions">
         <item>Все города</item>
-        <item>St. Petersburg</item>
-        <item>Moscow</item>
-        <item>Novosibirsk</item>
-        <item>Ekaterinburg</item>
-        <item>Nizhny Novgorod</item>
-        <item>Kazan</item>
-        <item>Samara</item>
-        <item>Krasnodar</item>
-        <item>Ufa</item>
-        <item>Krasnoyarsk</item>
+        <item>Санкт-Петербург</item>
+        <item>Москва</item>
+        <item>Новосибирск</item>
+        <item>Екатеринбург</item>
+        <item>Нижний Новгород</item>
+        <item>Казань</item>
+        <item>Самара</item>
+        <item>Краснодар</item>
+        <item>Уфа</item>
+        <item>Красноярск</item>
     </string-array>
 
     <string-array name="city_id">
