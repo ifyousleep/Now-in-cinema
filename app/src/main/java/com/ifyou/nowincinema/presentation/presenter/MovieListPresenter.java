@@ -14,6 +14,7 @@ import com.arellomobile.mvp.MvpPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -82,6 +83,13 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         }
         subscription = observable
                 .compose(Utils.applySchedulers())
+                .retryWhen(errors ->
+                        errors
+                                .zipWith(
+                                        Observable.range(1, 3), (n, i) -> i)
+                                .flatMap(
+                                        retryCount -> Observable.timer(retryCount,
+                                                TimeUnit.SECONDS)))
                 .subscribe(resp -> {
                     mCountList = resp.getCount() - 1;
                     onLoadingFinish();

@@ -47,17 +47,20 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     private GridLayoutManager mGridLayoutManager;
     private View mFooter;
 
+    private static String sCity = "city";
+    private static String sMyCity = "my_city";
+
     @ProvidePresenter
     MovieListPresenter provideMovieListPresenter() {
-        String mCity = getArguments().getString("city");
+        String mCity = getArguments().getString(sCity);
         return new MovieListPresenter(mCity);
     }
 
     public static MovieListFragment newInstance(String city, String myCity) {
         MovieListFragment fragment = new MovieListFragment();
         Bundle args = new Bundle();
-        args.putString("city", city);
-        args.putString("my_city", myCity);
+        args.putString(sCity, city);
+        args.putString(sMyCity, myCity);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,7 +76,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String myCity = getArguments().getString("my_city", "");
+        String myCity = getArguments().getString(sMyCity, "");
         if (myCity.length() > 0)
             getActivity().setTitle(myCity);
         else
@@ -85,6 +88,10 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getContext(), R.dimen.item_offset));
+
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
 
