@@ -12,8 +12,7 @@ import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
 import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 import com.ifyou.nowincinema.ui.activity.MainActivity;
-import com.ifyou.nowincinema.ui.fragment.FilmContainerFragment;
-import com.ifyou.nowincinema.ui.fragment.PlaceContainerFragment;
+import com.ifyou.nowincinema.ui.fragment.ContainerFragment;
 
 import javax.inject.Singleton;
 
@@ -44,10 +43,8 @@ public interface AppComponent {
 
     void inject (MainPresenter mainPresenter);
 
-    void inject (FilmContainerFragment filmContainerFragment);
-
-    void inject (PlaceContainerFragment placeContainerFragment);
-
     void inject (ShowingListPresenter showingListPresenter);
+
+    void inject (ContainerFragment containerFragment);
 
 }
