@@ -20,12 +20,23 @@ public class MainPresenter extends MvpPresenter<MainView> {
         CinemaApp.getAppComponent().inject(this);
     }
 
+    public void showMenuPlace() {
+        router.replaceScreen(Screens.PLACE_CONTAINER_SCREEN);
+    }
+
+    public void showMenuFilm() {
+        router.replaceScreen(Screens.FILM_CONTAINER_SCREEN);
+    }
+
+    public void onBackPressed() {
+        router.exit();
+    }
+
     public void showDialog() {
-            getViewState().showDialog();
+        getViewState().showDialog();
     }
 
     public void updateCity() {
-        router.newRootScreen(Screens.LIST_SCREEN);
+        getViewState().restartApp();
     }
-
 }

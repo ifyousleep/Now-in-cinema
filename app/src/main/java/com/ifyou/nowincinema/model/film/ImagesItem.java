@@ -1,6 +1,6 @@
-package com.ifyou.nowincinema.model;
+package com.ifyou.nowincinema.model.film;
 
-public class Poster{
+public class ImagesItem{
 	private String image;
 	private Source source;
 
@@ -23,7 +23,7 @@ public class Poster{
 	@Override
  	public String toString(){
 		return 
-			"Poster{" + 
+			"ImagesItem{" + 
 			"image = '" + image + '\'' + 
 			",source = '" + source + '\'' + 
 			"}";

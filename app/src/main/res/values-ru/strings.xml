@@ -10,6 +10,9 @@
     <string name="stars">В ролях: %1$s</string>
     <string name="city">Город</string>
 
+    <string name="film">Фильмы</string>
+    <string name="place">Показы</string>
+
     <string-array name="city_actions">
         <item>Все города</item>
         <item>Санкт-Петербург</item>

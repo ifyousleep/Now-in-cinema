@@ -1,8 +1,8 @@
-package com.ifyou.nowincinema.model;
+package com.ifyou.nowincinema.model.place;
 
 import java.util.List;
 
-public class Response{
+public class Showing{
 	private String next;
 	private Object previous;
 	private int count;
@@ -43,7 +43,7 @@ public class Response{
 	@Override
  	public String toString(){
 		return 
-			"Response{" + 
+			"Showing{" + 
 			"next = '" + next + '\'' + 
 			",previous = '" + previous + '\'' + 
 			",count = '" + count + '\'' + 

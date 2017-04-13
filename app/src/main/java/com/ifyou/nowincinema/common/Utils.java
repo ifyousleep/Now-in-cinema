@@ -14,4 +14,8 @@ public class Utils {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    public static String getUnixTimestamp() {
+        return String.valueOf(System.currentTimeMillis() / 1000L);
+    }
 }

@@ -4,12 +4,16 @@ import android.content.Context;
 
 import com.ifyou.nowincinema.di.modules.CinemaModule;
 import com.ifyou.nowincinema.di.modules.ContextModule;
+import com.ifyou.nowincinema.di.modules.LocalNavigationModule;
 import com.ifyou.nowincinema.di.modules.NavigationModule;
 import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
+import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 import com.ifyou.nowincinema.ui.activity.MainActivity;
+import com.ifyou.nowincinema.ui.fragment.FilmContainerFragment;
+import com.ifyou.nowincinema.ui.fragment.PlaceContainerFragment;
 
 import javax.inject.Singleton;
 
@@ -23,7 +27,8 @@ import dagger.Component;
 @Component(modules = {
         ContextModule.class,
         CinemaModule.class,
-        NavigationModule.class
+        NavigationModule.class,
+        LocalNavigationModule.class
 })
 public interface AppComponent {
 
@@ -38,5 +43,11 @@ public interface AppComponent {
     void inject (DetailsPresenter detailsPresenter);
 
     void inject (MainPresenter mainPresenter);
+
+    void inject (FilmContainerFragment filmContainerFragment);
+
+    void inject (PlaceContainerFragment placeContainerFragment);
+
+    void inject (ShowingListPresenter showingListPresenter);
 
 }

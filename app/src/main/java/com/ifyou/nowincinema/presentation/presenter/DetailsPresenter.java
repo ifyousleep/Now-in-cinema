@@ -4,12 +4,11 @@ package com.ifyou.nowincinema.presentation.presenter;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
-import com.ifyou.nowincinema.model.Movie;
+import com.ifyou.nowincinema.model.film.Movie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.ifyou.nowincinema.ui.Screens;
-import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import javax.inject.Inject;
 
@@ -24,18 +23,17 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
     @Inject
     CinemaService mCinemaService;
 
-    @Inject
-    Router router;
-
+    private Router router;
     private boolean mIsInLoading;
     private Disposable subscription = Disposables.empty();
 
-    public DetailsPresenter() {
+    public DetailsPresenter(Router router) {
         CinemaApp.getAppComponent().inject(this);
+        this.router = router;
     }
 
-    public void showTouch(TransitionObject transitionObject) {
-        router.navigateTo(Screens.TOUCH_SCREEN, transitionObject);
+    public void showTouch(String url) {
+        router.navigateTo(Screens.POSTER_SCREEN, url);
     }
 
     @Override
@@ -45,13 +43,13 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
         }
     }
 
-    public void loadData(TransitionObject transitionObject) {
+    public void loadData(Integer id) {
         if (mIsInLoading) {
             return;
         }
         mIsInLoading = true;
 
-        final Observable<Movie> observable = mCinemaService.getAboutMovie(transitionObject.getInteger());
+        final Observable<Movie> observable = mCinemaService.getAboutMovie(id);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
@@ -77,5 +75,13 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
     private void onLoadingFinish() {
         mIsInLoading = false;
         getViewState().hideProgressBar();
+    }
+
+    public void showPoster(String url) {
+        getViewState().showPoster(url);
+    }
+
+    public void onBackPressed() {
+        router.exit();
     }
 }

@@ -3,11 +3,11 @@ package com.ifyou.nowincinema.presentation.view;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.ifyou.nowincinema.model.film.ResultsItem;
+import com.ifyou.nowincinema.model.place.ResultsItem;
 
 import java.util.List;
 
-public interface MovieListView extends MvpView {
+public interface ShowingListView extends MvpView {
 
     @StateStrategyType(SkipStrategy.class)
     void showError(String error);

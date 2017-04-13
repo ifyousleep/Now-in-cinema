@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model;
+package com.ifyou.nowincinema.model.place;
 
 public class Source{
 	private String link;

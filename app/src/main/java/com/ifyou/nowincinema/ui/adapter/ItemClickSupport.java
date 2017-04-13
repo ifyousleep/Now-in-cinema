@@ -96,4 +96,9 @@ public class ItemClickSupport {
 
         boolean onItemLongClicked(RecyclerView recyclerView, int position, View v);
     }
+
+    public interface OnRowClickListener {
+
+        void onRowClicked(int position, View v);
+    }
 }

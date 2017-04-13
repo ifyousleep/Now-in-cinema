@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model;
+package com.ifyou.nowincinema.model.film;
 
 import java.util.List;
 

@@ -1,6 +1,9 @@
 package com.ifyou.nowincinema.model;
 
 import com.ifyou.nowincinema.app.CinemaApi;
+import com.ifyou.nowincinema.model.film.Movie;
+import com.ifyou.nowincinema.model.film.Response;
+import com.ifyou.nowincinema.model.place.Showing;
 
 import io.reactivex.Observable;
 
@@ -22,5 +25,9 @@ public class CinemaService {
 
     public Observable<Movie> getAboutMovie(Integer id) {
         return mCinemaApi.getAboutMovie(id);
+    }
+
+    public Observable<Showing> getShowings(String actual, String expand, Integer page, String location) {
+        return mCinemaApi.getShowings(actual, expand, page, location);
     }
 }

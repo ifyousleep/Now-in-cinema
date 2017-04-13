@@ -7,6 +7,8 @@ import android.text.Html;
 import android.text.Spanned;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.ifyou.nowincinema.model.Movie;
+import com.ifyou.nowincinema.common.BackButtonListener;
+import com.ifyou.nowincinema.common.RouterProvider;
+import com.ifyou.nowincinema.model.film.Movie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
 
@@ -32,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class DetailsFragment extends MvpAppCompatFragment implements DetailsView {
+public class DetailsFragment extends MvpAppCompatFragment implements DetailsView, BackButtonListener {
 
     @InjectPresenter
     DetailsPresenter mDetailsPresenter;
@@ -56,10 +61,16 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     private Unbinder mUnbinder;
 
-    public static DetailsFragment newInstance(TransitionObject transitionObject) {
+    @ProvidePresenter
+    DetailsPresenter provideDetailsPresenter() {
+        return new DetailsPresenter(((RouterProvider) getParentFragment()).getRouter());
+    }
+
+    public static DetailsFragment newInstance(String url, Integer id) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("data", transitionObject);
+        args.putString("URL", url);
+        args.putInt("ID", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,6 +78,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
@@ -86,32 +98,33 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.app_detail);
-        TransitionObject transitionObject = (TransitionObject) getArguments().getSerializable("data");
-        if (transitionObject != null) {
-            Glide.with(getContext())
-                    .load(transitionObject.getUrl())
-                    .dontAnimate()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .listener(new RequestListener<String, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            startPostponedEnterTransition();
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            startPostponedEnterTransition();
-                            return false;
-                        }
-                    })
-                    .into(poster);
-
-            transitionObject.setView(poster);
-            poster.setOnClickListener(v -> mDetailsPresenter.showTouch(transitionObject));
-            if (savedInstanceState == null)
-                mDetailsPresenter.loadData(transitionObject);
+        if (savedInstanceState == null) {
+            mDetailsPresenter.loadData(getArguments().getInt("ID"));
+            mDetailsPresenter.showPoster(getArguments().getString("URL"));
         }
+        poster.setOnClickListener(v -> mDetailsPresenter.showTouch(getArguments().getString("URL")));
+    }
+
+    @Override
+    public void showPoster(String url) {
+        Glide.with(getContext())
+                .load(url)
+                .dontAnimate()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+                })
+                .into(poster);
     }
 
     @Override
@@ -149,5 +162,17 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        mDetailsPresenter.onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_city);
+        item.setVisible(false);
     }
 }
