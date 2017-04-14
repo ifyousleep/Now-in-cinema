@@ -4,7 +4,7 @@ package com.ifyou.nowincinema.presentation.presenter;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
-import com.ifyou.nowincinema.model.film.Movie;
+import com.ifyou.nowincinema.model.dto.details.DetailsMovie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -49,7 +49,7 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
         }
         mIsInLoading = true;
 
-        final Observable<Movie> observable = mCinemaService.getAboutMovie(id);
+        final Observable<DetailsMovie> observable = mCinemaService.getAboutMovie(id);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
@@ -64,7 +64,7 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
                 });
     }
 
-    private void onLoadingSuccess(Movie response) {
+    private void onLoadingSuccess(DetailsMovie response) {
         getViewState().showAbout(response);
     }
 

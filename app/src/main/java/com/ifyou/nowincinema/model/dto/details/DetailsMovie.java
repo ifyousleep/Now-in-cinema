@@ -1,8 +1,8 @@
-package com.ifyou.nowincinema.model.film;
+package com.ifyou.nowincinema.model.dto.details;
 
 import java.util.List;
 
-public class Movie{
+public class DetailsMovie{
 	private String country;
 	private String body_text;
 	private int year;
@@ -33,7 +33,7 @@ public class Movie{
 	private String awards;
 	private String writer;
 	private String budgetCurrency;
-	private int ageRestriction;
+	private Object ageRestriction;
 	private Poster poster;
 
 	public void setCountry(String country){
@@ -44,11 +44,11 @@ public class Movie{
 		return country;
 	}
 
-	public void setBodyText(String bodyText){
-		this.body_text = bodyText;
+	public void setBody_text(String body_text){
+		this.body_text = body_text;
 	}
 
-	public String getBodyText(){
+	public String getBody_text(){
 		return body_text;
 	}
 
@@ -276,11 +276,11 @@ public class Movie{
 		return budgetCurrency;
 	}
 
-	public void setAgeRestriction(int ageRestriction){
+	public void setAgeRestriction(Object ageRestriction){
 		this.ageRestriction = ageRestriction;
 	}
 
-	public int getAgeRestriction(){
+	public Object getAgeRestriction(){
 		return ageRestriction;
 	}
 
@@ -295,7 +295,7 @@ public class Movie{
 	@Override
  	public String toString(){
 		return 
-			"Movie{" + 
+			"DetailsMovie{" + 
 			"country = '" + country + '\'' + 
 			",body_text = '" + body_text + '\'' +
 			",year = '" + year + '\'' + 

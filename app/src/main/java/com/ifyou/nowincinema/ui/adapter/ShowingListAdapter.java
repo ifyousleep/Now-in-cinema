@@ -9,7 +9,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.model.place.ResultsItem;
+import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
+import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
+import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

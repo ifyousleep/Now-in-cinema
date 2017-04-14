@@ -34,9 +34,9 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
     // moxy
-    compile 'com.arello-mobile:moxy:1.4.6'
-    provided 'com.arello-mobile:moxy-compiler:1.4.6'
-    compile 'com.arello-mobile:moxy-app-compat:1.4.6'
+    compile 'com.arello-mobile:moxy:1.5.1'
+    provided 'com.arello-mobile:moxy-compiler:1.5.1'
+    compile 'com.arello-mobile:moxy-app-compat:1.5.1'
     // rx
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.7'

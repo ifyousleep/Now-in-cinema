@@ -9,7 +9,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.model.film.ResultsItem;
+import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
+import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

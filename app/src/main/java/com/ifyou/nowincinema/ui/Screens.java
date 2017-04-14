@@ -10,6 +10,7 @@ public class Screens {
     public static final String DETAILS_SCREEN = "DetailsFragment";
 
     public static final String SHOWING_SCREEN = "ShowingListFragment";
+    public static final String PLACE_SCREEN = "PlaceFragment";
 
     public static final String FILM_CONTAINER_SCREEN = "FilmContainerFragment";
     public static final String PLACE_CONTAINER_SCREEN = "PlaceContainerFragment";

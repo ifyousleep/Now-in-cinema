@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.adapter;
+package com.ifyou.nowincinema.ui.adapter.base;
 
 import android.content.Context;
 import android.graphics.Rect;

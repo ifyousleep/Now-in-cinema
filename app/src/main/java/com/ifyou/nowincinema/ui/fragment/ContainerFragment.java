@@ -103,6 +103,8 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                         case Screens.DETAILS_SCREEN:
                             TransitionObject transitionObject = (TransitionObject) data;
                             return DetailsFragment.newInstance(transitionObject.getUrl(), transitionObject.getInteger());
+                        case Screens.PLACE_SCREEN:
+                            return PlaceFragment.newInstance();
                     }
                     return null;
                 }

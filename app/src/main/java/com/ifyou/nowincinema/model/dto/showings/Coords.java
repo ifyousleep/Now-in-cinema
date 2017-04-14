@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model.place;
+package com.ifyou.nowincinema.model.dto.showings;
 
 public class Coords{
 	private double lon;

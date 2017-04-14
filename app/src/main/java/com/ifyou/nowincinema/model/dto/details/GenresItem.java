@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model.film;
+package com.ifyou.nowincinema.model.dto.details;
 
 public class GenresItem{
 	private String name;

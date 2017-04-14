@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model.place;
+package com.ifyou.nowincinema.model.dto.showings;
 
 import java.util.List;
 

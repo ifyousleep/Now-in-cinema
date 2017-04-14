@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.adapter;
+package com.ifyou.nowincinema.ui.adapter.base;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

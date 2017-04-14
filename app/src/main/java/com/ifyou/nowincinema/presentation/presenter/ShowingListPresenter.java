@@ -4,8 +4,8 @@ package com.ifyou.nowincinema.presentation.presenter;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
-import com.ifyou.nowincinema.model.place.ResultsItem;
-import com.ifyou.nowincinema.model.place.Showing;
+import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
+import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
@@ -74,7 +74,7 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
         }
         mIsInLoading = true;
 
-        final Observable<Showing> observable = mCinemaService.getShowings(mTime, "movie,place", page, mCity);
+        final Observable<ShowingsList> observable = mCinemaService.getShowings(mTime, "movie,place", page, mCity);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
@@ -102,7 +102,7 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
         getViewState().hideProgressBar();
     }
 
-    private void onLoadingSuccess(Showing response) {
+    private void onLoadingSuccess(ShowingsList response) {
         List<ResultsItem> resultsItems;
         resultsItems = response.getResults();
         mResultsItems.addAll(resultsItems);
@@ -124,6 +124,10 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
         transitionObject.setInteger(mResultsItems.get(transitionObject.getInteger()).getMovie().getId());
         Timber.d("ID = " + transitionObject.getInteger());
         router.navigateTo(Screens.DETAILS_SCREEN, transitionObject);
+    }
+
+    public void clickPlace() {
+        router.navigateTo(Screens.PLACE_SCREEN);
     }
 
     public void onBackPressed() {

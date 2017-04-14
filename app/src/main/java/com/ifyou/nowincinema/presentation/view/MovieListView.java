@@ -1,6 +1,7 @@
 package com.ifyou.nowincinema.presentation.view;
 
-import com.ifyou.nowincinema.model.film.ResultsItem;
+
+import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
 
 import java.util.List;
 

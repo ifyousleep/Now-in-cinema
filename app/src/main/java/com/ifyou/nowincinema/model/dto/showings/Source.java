@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.model.film;
+package com.ifyou.nowincinema.model.dto.showings;
 
 public class Source{
 	private String link;

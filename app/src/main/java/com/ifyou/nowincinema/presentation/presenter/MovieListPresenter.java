@@ -1,11 +1,11 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
+import com.ifyou.nowincinema.model.dto.movies.ListMovies;
+import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
-import com.ifyou.nowincinema.model.film.Response;
-import com.ifyou.nowincinema.model.film.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
 import com.ifyou.nowincinema.ui.Screens;
 
@@ -75,7 +75,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         }
         mIsInLoading = true;
 
-        final Observable<Response> observable = mCinemaService.getMovieList(mTime, page, mCity);
+        final Observable<ListMovies> observable = mCinemaService.getMovieList(mTime, page, mCity);
         if (!subscription.isDisposed()) {
             subscription.dispose();
         }
@@ -110,9 +110,9 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         getViewState().hideProgressBar();
     }
 
-    private void onLoadingSuccess(Response response) {
+    private void onLoadingSuccess(ListMovies listMovies) {
         List<ResultsItem> resultsItems;
-        resultsItems = response.getResults();
+        resultsItems = listMovies.getResults();
         mResultsItems.addAll(resultsItems);
         getViewState().showResultsItemList(resultsItems);
         getViewState().activateLastItemViewListener();

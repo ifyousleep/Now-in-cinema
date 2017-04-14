@@ -2,6 +2,7 @@
     <string name="app_name">Now in the cinema</string>
     <string name="app_detail">About the film</string>
     <string name="app_poster">Poster</string>
+    <string name="app_place">About the place</string>
 
     <string name="imdb">IMDB - %1$s</string>
     <string name="country_year">%1$s %2$s</string>

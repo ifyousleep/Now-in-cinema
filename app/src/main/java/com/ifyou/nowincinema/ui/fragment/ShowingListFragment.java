@@ -15,14 +15,14 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.model.place.ResultsItem;
+import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
 import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.ifyou.nowincinema.ui.adapter.ItemClickSupport;
+import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.ShowingListAdapter;
 
 import java.util.List;
@@ -94,7 +94,7 @@ public class ShowingListFragment extends MvpAppCompatFragment implements Showing
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->
-                    showError("recycler item")
+                    mShowingListPresenter.clickPlace()
         );
 
         mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);

@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.adapter;
+package com.ifyou.nowincinema.ui.adapter.base;
 
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -183,7 +183,7 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
         return (position < headers.size());
     }
 
-    boolean isFooter(int position) {
+    protected boolean isFooter(int position) {
         return footers.size() > 0 && (position >= getHeadersCount() + getRealItemCount());
     }
 

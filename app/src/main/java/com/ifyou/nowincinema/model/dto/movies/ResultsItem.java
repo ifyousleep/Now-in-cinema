@@ -1,6 +1,6 @@
-package com.ifyou.nowincinema.model.place;
+package com.ifyou.nowincinema.model.dto.movies;
 
-public class Movie{
+public class ResultsItem{
 	private int id;
 	private String title;
 	private Poster poster;
@@ -32,7 +32,7 @@ public class Movie{
 	@Override
  	public String toString(){
 		return 
-			"Movie{" + 
+			"ResultsItem{" + 
 			"id = '" + id + '\'' + 
 			",title = '" + title + '\'' + 
 			",poster = '" + poster + '\'' + 
