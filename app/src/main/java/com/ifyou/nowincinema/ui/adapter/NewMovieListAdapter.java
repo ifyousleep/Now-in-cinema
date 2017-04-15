@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
+import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
 
 import butterknife.BindView;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by Baranov on 06.04.2017.
  **/
 
-public class NewMovieListAdapter extends RecyclerBindableAdapter<ResultsItem, NewMovieListAdapter.LinearViewHolder> {
+public class NewMovieListAdapter extends RecyclerBindableAdapter<Movies, NewMovieListAdapter.LinearViewHolder> {
 
     @Override
     protected int layoutId(int type) {
@@ -56,10 +56,10 @@ public class NewMovieListAdapter extends RecyclerBindableAdapter<ResultsItem, Ne
             ButterKnife.bind(this, itemView);
         }
 
-        void bindView(ResultsItem item) {
+        void bindView(Movies item) {
             text.setText(item.getTitle());
             Glide.with(imageView.getContext())
-                    .load(item.getPoster().getImage())
+                    .load(item.getPosterUrl())
                     .dontAnimate()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);

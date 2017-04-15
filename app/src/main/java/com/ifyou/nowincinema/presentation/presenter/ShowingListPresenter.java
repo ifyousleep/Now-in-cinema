@@ -9,6 +9,7 @@ import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.ui.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
@@ -126,8 +127,10 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
         router.navigateTo(Screens.DETAILS_SCREEN, transitionObject);
     }
 
-    public void clickPlace() {
-        router.navigateTo(Screens.PLACE_SCREEN);
+    public void clickPlace(Integer pos) {
+        String name = mResultsItems.get(pos).getPlace().getTitle();
+        PlaceObject placeObject = new PlaceObject(name);
+        router.navigateTo(Screens.PLACE_SCREEN, placeObject);
     }
 
     public void onBackPressed() {

@@ -70,7 +70,7 @@ public class ShowingListAdapter extends RecyclerBindableAdapter<ResultsItem, Sho
 
         void bindView(ResultsItem item) {
             textTitle.setText(item.getMovie().getTitle());
-            textPlace.setText(item.getPlace().getTitle());
+            textPlace.setText(item.getPlace().getTitle().toUpperCase());
 
             long unixSeconds = item.getDatetime();
             Date date = new Date(unixSeconds * 1000L);

@@ -34,6 +34,8 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
 
     private String mUrl;
 
+    public static final String EXTRA_URL = "com.ifyou.nowincinema.ui.activity.url";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        mUrl = intent.getStringExtra("URL");
+        mUrl = intent.getStringExtra(EXTRA_URL);
 
         Glide.with(this)
                 .load(mUrl)

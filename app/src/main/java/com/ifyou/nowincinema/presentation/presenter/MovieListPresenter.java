@@ -2,6 +2,7 @@ package com.ifyou.nowincinema.presentation.presenter;
 
 import com.ifyou.nowincinema.model.dto.movies.ListMovies;
 import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
+import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
@@ -23,6 +24,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import ru.terrakok.cicerone.Router;
 import timber.log.Timber;
+
+import static com.ifyou.nowincinema.presentation.mappers.Mapper.fromResultsItemToMovies;
 
 @InjectViewState
 public class MovieListPresenter extends MvpPresenter<MovieListView> {
@@ -114,7 +117,9 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         List<ResultsItem> resultsItems;
         resultsItems = listMovies.getResults();
         mResultsItems.addAll(resultsItems);
-        getViewState().showResultsItemList(resultsItems);
+
+        List<Movies> moviesList = fromResultsItemToMovies(resultsItems);
+        getViewState().showResultsItemList(moviesList);
         getViewState().activateLastItemViewListener();
     }
 

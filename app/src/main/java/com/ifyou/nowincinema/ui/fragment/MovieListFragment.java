@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
 
@@ -24,6 +23,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.GridSpacingItemDecoration;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.NewMovieListAdapter;
@@ -70,9 +70,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        //CinemaApp.getAppComponent().inject(this);
         super.onCreate(savedInstanceState);
-        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -118,8 +116,8 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     }
 
     @Override
-    public void showResultsItemList(List<ResultsItem> resultsItemList) {
-        mAdapter.addAll(resultsItemList);
+    public void showResultsItemList(List<Movies> moviesList) {
+        mAdapter.addAll(moviesList);
         if (mAdapter.getFootersCount() == 0)
             mAdapter.addFooter(mFooter);
     }

@@ -57,6 +57,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     private FilmContainerFragment mFilmContainerFragment;
     private PlaceContainerFragment mPlaceContainerFragment;
 
+    public static final String EXTRA_ID = "com.ifyou.nowincinema.ui.activity.id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -70,7 +72,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
         setupBottomNavigationView();
 
         if (savedInstanceState == null) {
-            mBottomNavigationView.setSelectedItemId(getIntent().getIntExtra("id", R.id.menu_film));
+            mBottomNavigationView.setSelectedItemId(getIntent().getIntExtra(EXTRA_ID, R.id.menu_film));
         }
     }
 
@@ -205,7 +207,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     @Override
     public void restartApp() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("id", mBottomNavigationView.getSelectedItemId());
+        intent.putExtra(EXTRA_ID, mBottomNavigationView.getSelectedItemId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);

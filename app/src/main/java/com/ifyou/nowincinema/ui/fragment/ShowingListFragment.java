@@ -94,7 +94,7 @@ public class ShowingListFragment extends MvpAppCompatFragment implements Showing
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->
-                    mShowingListPresenter.clickPlace()
+                    mShowingListPresenter.clickPlace(pos)
         );
 
         mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
