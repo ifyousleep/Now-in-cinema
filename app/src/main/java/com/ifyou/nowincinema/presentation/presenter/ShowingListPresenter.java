@@ -6,10 +6,12 @@ import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
 import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
+import com.ifyou.nowincinema.presentation.mappers.ShowingsMappers;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.ifyou.nowincinema.ui.PlaceObject;
+import com.ifyou.nowincinema.presentation.vo.Showings;
+import com.ifyou.nowincinema.presentation.vo.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
@@ -22,7 +24,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
+
 import ru.terrakok.cicerone.Router;
+
 import timber.log.Timber;
 
 @InjectViewState
@@ -36,7 +40,7 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
     private Disposable subscription = Disposables.empty();
     private Integer mPage = 1;
     private Integer mCountList = 0;
-    private List<ResultsItem> mResultsItems = new ArrayList<>();
+    private List<Showings> mResultsItems = new ArrayList<>();
     private String mCity;
     private String mTime;
 
@@ -104,10 +108,10 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
     }
 
     private void onLoadingSuccess(ShowingsList response) {
-        List<ResultsItem> resultsItems;
-        resultsItems = response.getResults();
-        mResultsItems.addAll(resultsItems);
-        getViewState().showResultsItemList(resultsItems);
+        List<ResultsItem> resultsItems = response.getResults();
+        List<Showings> showingsList = ShowingsMappers.fromResultsItemToShowing(resultsItems);
+        mResultsItems.addAll(showingsList);
+        getViewState().showResultsItemList(showingsList);
         getViewState().activateLastItemViewListener();
     }
 
@@ -121,14 +125,14 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
     }
 
     public void clickItem(TransitionObject transitionObject) {
-        transitionObject.setUrl(mResultsItems.get(transitionObject.getInteger()).getMovie().getPoster().getImage());
-        transitionObject.setInteger(mResultsItems.get(transitionObject.getInteger()).getMovie().getId());
+        transitionObject.setUrl(mResultsItems.get(transitionObject.getInteger()).getPosterUrl());
+        transitionObject.setInteger(mResultsItems.get(transitionObject.getInteger()).getMovieId());
         Timber.d("ID = " + transitionObject.getInteger());
         router.navigateTo(Screens.DETAILS_SCREEN, transitionObject);
     }
 
     public void clickPlace(Integer pos) {
-        String name = mResultsItems.get(pos).getPlace().getTitle();
+        String name = mResultsItems.get(pos).getPlaceTitle();
         PlaceObject placeObject = new PlaceObject(name);
         router.navigateTo(Screens.PLACE_SCREEN, placeObject);
     }

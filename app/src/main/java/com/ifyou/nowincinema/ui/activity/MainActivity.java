@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.ui.Extra;
-import com.ifyou.nowincinema.ui.fragment.FilmContainerFragment;
-import com.ifyou.nowincinema.ui.fragment.PlaceContainerFragment;
+import com.ifyou.nowincinema.ui.fragment.container.FilmContainerFragment;
+import com.ifyou.nowincinema.ui.fragment.container.PlaceContainerFragment;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.presentation.view.MainView;
 import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;

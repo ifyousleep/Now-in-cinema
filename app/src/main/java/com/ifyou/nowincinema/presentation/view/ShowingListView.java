@@ -1,10 +1,10 @@
 package com.ifyou.nowincinema.presentation.view;
 
-import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
+import com.ifyou.nowincinema.presentation.vo.Showings;
 
 import java.util.List;
 
 public interface ShowingListView extends BaseListView {
 
-    void showResultsItemList(List<ResultsItem> resultsItemList);
+    void showResultsItemList(List<Showings> resultsItemList);
 }

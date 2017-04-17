@@ -1,18 +1,18 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
-
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.model.dto.details.DetailsMovie;
 import com.ifyou.nowincinema.presentation.mappers.DetailsMapper;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.ifyou.nowincinema.presentation.vo.Details;
 import com.ifyou.nowincinema.ui.Screens;
 
 import javax.inject.Inject;
+
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;

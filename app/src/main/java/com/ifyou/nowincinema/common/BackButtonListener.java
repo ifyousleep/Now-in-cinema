@@ -5,5 +5,6 @@ package com.ifyou.nowincinema.common;
  **/
 
 public interface BackButtonListener {
+
     boolean onBackPressed();
 }

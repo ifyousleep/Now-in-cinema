@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui;
+package com.ifyou.nowincinema.presentation.vo;
 
 import java.io.Serializable;
 

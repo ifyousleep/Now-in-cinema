@@ -11,25 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
 import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
-
-import com.ifyou.nowincinema.R;
-
-import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.ShowingListAdapter;
+import com.ifyou.nowincinema.R;
+
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import timber.log.Timber;
 
 public class ShowingListFragment extends MvpAppCompatFragment implements ShowingListView, BackButtonListener, ItemClickSupport.OnRowClickListener {
@@ -112,8 +112,8 @@ public class ShowingListFragment extends MvpAppCompatFragment implements Showing
     }
 
     @Override
-    public void showResultsItemList(List<ResultsItem> resultsItemList) {
-        mAdapter.addAll(resultsItemList);
+    public void showResultsItemList(List<Showings> showingsList) {
+        mAdapter.addAll(showingsList);
         if (mAdapter.getFootersCount() == 0)
             mAdapter.addFooter(mFooter);
     }

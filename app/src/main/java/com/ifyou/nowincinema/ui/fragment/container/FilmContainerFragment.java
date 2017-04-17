@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.fragment;
+package com.ifyou.nowincinema.ui.fragment.container;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

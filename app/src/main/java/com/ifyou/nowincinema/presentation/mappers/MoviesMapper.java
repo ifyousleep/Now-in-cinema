@@ -15,7 +15,9 @@ public class MoviesMapper {
 
     public static List<Movies> fromResultsItemToMovies(List<ResultsItem> getResultsItems) {
         return Observable.fromIterable(getResultsItems)
-                .map(movieDTO -> new Movies(movieDTO.getTitle(), movieDTO.getPoster().getImage(), movieDTO.getId()))
+                .map(movieDTO -> new Movies(movieDTO.getTitle(),
+                        movieDTO.getPoster().getImage(),
+                        movieDTO.getId()))
                 .toList()
                 .toObservable()
                 .blockingFirst();

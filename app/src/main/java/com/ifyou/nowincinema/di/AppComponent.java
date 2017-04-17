@@ -12,7 +12,7 @@ import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
 import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 import com.ifyou.nowincinema.ui.activity.MainActivity;
-import com.ifyou.nowincinema.ui.fragment.ContainerFragment;
+import com.ifyou.nowincinema.ui.fragment.container.ContainerFragment;
 
 import javax.inject.Singleton;
 

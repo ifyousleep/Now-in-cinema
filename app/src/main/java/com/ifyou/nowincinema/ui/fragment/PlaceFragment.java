@@ -20,7 +20,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.ifyou.nowincinema.ui.PlaceObject;
+import com.ifyou.nowincinema.presentation.vo.PlaceObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

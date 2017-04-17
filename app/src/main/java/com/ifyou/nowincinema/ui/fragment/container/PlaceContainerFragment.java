@@ -1,38 +1,47 @@
-package com.ifyou.nowincinema.ui.fragment;
+package com.ifyou.nowincinema.ui.fragment.container;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.app.CinemaApp;
-import com.ifyou.nowincinema.common.BackButtonListener;
-import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.di.LocalCiceroneHolder;
-import com.ifyou.nowincinema.ui.Extra;
-import com.ifyou.nowincinema.ui.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
-import com.ifyou.nowincinema.ui.activity.PosterActivity;
-
-import javax.inject.Inject;
 
 import ru.terrakok.cicerone.Cicerone;
-import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.Router;
-import ru.terrakok.cicerone.android.SupportAppNavigator;
-import ru.terrakok.cicerone.commands.Command;
-import ru.terrakok.cicerone.commands.Forward;
 
 /**
- * Created by Baranov on 13.04.2017.
+ * Created by Baranov on 12.04.2017.
  **/
 
-public class ContainerFragment  extends Fragment implements RouterProvider, BackButtonListener {
+public class PlaceContainerFragment extends ContainerFragment {
+
+    private Cicerone<Router> getCicerone() {
+        return ciceroneHolder.getCicerone(getContainerName());
+    }
+
+    public static PlaceContainerFragment getNewInstance(String name) {
+        PlaceContainerFragment fragment = new PlaceContainerFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString(EXTRA_NAME, name);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (getChildFragmentManager().findFragmentById(R.id.ftc_container) == null) {
+            getCicerone().getRouter().replaceScreen(Screens.SHOWING_SCREEN, 0);
+        }
+    }
+}
+
+/*public class PlaceContainerFragment extends Fragment implements RouterProvider, BackButtonListener {
+
+    private static final String EXTRA_NAME = "pcf_extra_name";
+
+    private Navigator navigator;
 
     @Inject
     LocalCiceroneHolder ciceroneHolder;
@@ -40,10 +49,15 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
     @Inject
     SharedPreferences mSharedPrefs;
 
-    public static final String EXTRA_NAME = "extra_name";
-    private Navigator navigator;
+    public static PlaceContainerFragment getNewInstance(String name) {
+        PlaceContainerFragment fragment = new PlaceContainerFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString(EXTRA_NAME, name);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
-    public String getContainerName() {
+    private String getContainerName() {
         return getArguments().getString(EXTRA_NAME);
     }
 
@@ -66,6 +80,10 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (getChildFragmentManager().findFragmentById(R.id.ftc_container) == null) {
+            getCicerone().getRouter().replaceScreen(Screens.SHOWING_SCREEN, 0);
+        }
     }
 
     @Override
@@ -88,7 +106,7 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                 protected Intent createActivityIntent(String screenKey, Object data) {
                     if (screenKey.equals(Screens.POSTER_SCREEN)) {
                         Intent intent = new Intent(getActivity(), PosterActivity.class);
-                        intent.putExtra(Extra.EXTRA_URL, (String) data);
+                        intent.putExtra("URL", (String) data);
                         return intent;
                     }
                     return null;
@@ -98,15 +116,11 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                 protected Fragment createFragment(String screenKey, Object data) {
                     String myCity = mSharedPrefs.getString("my_city", "");
                     switch (screenKey) {
-                        case Screens.LIST_SCREEN:
-                            return MovieListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
                         case Screens.SHOWING_SCREEN:
                             return ShowingListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
                         case Screens.DETAILS_SCREEN:
                             TransitionObject transitionObject = (TransitionObject) data;
                             return DetailsFragment.newInstance(transitionObject.getUrl(), transitionObject.getInteger());
-                        case Screens.PLACE_SCREEN:
-                            return PlaceFragment.newInstance((PlaceObject) data);
                     }
                     return null;
                 }
@@ -160,4 +174,4 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
             return true;
         }
     }
-}
+}*/

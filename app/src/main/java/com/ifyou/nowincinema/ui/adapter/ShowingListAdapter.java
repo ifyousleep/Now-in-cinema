@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
+import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by Baranov on 13.04.2017.
  **/
 
-public class ShowingListAdapter extends RecyclerBindableAdapter<ResultsItem, ShowingListAdapter.LinearViewHolder> {
+public class ShowingListAdapter extends RecyclerBindableAdapter<Showings, ShowingListAdapter.LinearViewHolder> {
 
     private ItemClickSupport.OnRowClickListener listener;
 
@@ -68,18 +69,18 @@ public class ShowingListAdapter extends RecyclerBindableAdapter<ResultsItem, Sho
             });
         }
 
-        void bindView(ResultsItem item) {
-            textTitle.setText(item.getMovie().getTitle());
-            textPlace.setText(item.getPlace().getTitle().toUpperCase());
+        void bindView(Showings item) {
+            textTitle.setText(item.getMovieTitle());
+            textPlace.setText(item.getPlaceTitle().toUpperCase());
 
-            long unixSeconds = item.getDatetime();
+            long unixSeconds = item.getTime();
             Date date = new Date(unixSeconds * 1000L);
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
             String formattedDate = sdf.format(date);
             textTime.setText(formattedDate);
 
             Glide.with(imageView.getContext())
-                    .load(item.getMovie().getPoster().getImage())
+                    .load(item.getPosterUrl())
                     .dontAnimate()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
