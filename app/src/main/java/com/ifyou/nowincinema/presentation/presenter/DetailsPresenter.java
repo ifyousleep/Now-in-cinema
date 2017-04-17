@@ -5,9 +5,11 @@ import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.model.dto.details.DetailsMovie;
+import com.ifyou.nowincinema.presentation.mappers.DetailsMapper;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.presentation.vo.Details;
 import com.ifyou.nowincinema.ui.Screens;
 
 import javax.inject.Inject;
@@ -22,6 +24,9 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
 
     @Inject
     CinemaService mCinemaService;
+
+    @Inject
+    DetailsMapper mDetailsMapper;
 
     private Router router;
     private boolean mIsInLoading;
@@ -55,6 +60,7 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
         }
         subscription = observable
                 .compose(Utils.applySchedulers())
+                .map(mDetailsMapper)
                 .subscribe(resp -> {
                     onLoadingFinish();
                     onLoadingSuccess(resp);
@@ -64,7 +70,7 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
                 });
     }
 
-    private void onLoadingSuccess(DetailsMovie response) {
+    private void onLoadingSuccess(Details response) {
         getViewState().showAbout(response);
     }
 

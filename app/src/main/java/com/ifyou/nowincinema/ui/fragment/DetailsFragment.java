@@ -16,8 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -25,12 +23,13 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.model.dto.details.DetailsMovie;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
-
+import com.ifyou.nowincinema.presentation.vo.Details;
 import com.ifyou.nowincinema.R;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import butterknife.BindView;
@@ -128,11 +127,11 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     }
 
     @Override
-    public void showAbout(DetailsMovie movie) {
-        textAbout.setText(fromHtml(movie.getBody_text()));
+    public void showAbout(Details movie) {
+        textAbout.setText(fromHtml(movie.getAbout()));
         textTitle.setText(movie.getTitle());
         textYear.setText(String.format(getString(R.string.country_year), movie.getCountry(), String.valueOf(movie.getYear())));
-        textImdb.setText(String.format(getString(R.string.imdb), String.valueOf(movie.getImdb_rating())));
+        textImdb.setText(String.format(getString(R.string.imdb), String.valueOf(movie.getImdb())));
         textDirector.setText(String.format(getString(R.string.director), movie.getDirector()));
         textStars.setText(String.format(getString(R.string.stars), movie.getStars()));
     }

@@ -18,6 +18,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.ifyou.nowincinema.ui.Extra;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +35,6 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
 
     private String mUrl;
 
-    public static final String EXTRA_URL = "com.ifyou.nowincinema.ui.activity.url";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +42,7 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        mUrl = intent.getStringExtra(EXTRA_URL);
+        mUrl = intent.getStringExtra(Extra.EXTRA_URL);
 
         Glide.with(this)
                 .load(mUrl)

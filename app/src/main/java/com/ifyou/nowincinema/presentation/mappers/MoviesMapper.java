@@ -11,7 +11,7 @@ import io.reactivex.Observable;
  * Created by Baranov on 15.04.2017.
  **/
 
-public class Mapper {
+public class MoviesMapper {
 
     public static List<Movies> fromResultsItemToMovies(List<ResultsItem> getResultsItems) {
         return Observable.fromIterable(getResultsItems)
@@ -21,22 +21,3 @@ public class Mapper {
                 .blockingFirst();
     }
 }
-
-/*
-public class Mapper implements Function<List<ResultsItem>, List<Movies>> {
-
-    @Inject
-    public Mapper() {
-
-    }
-
-    @Override
-    public List<Movies> apply (List<ResultsItem> moviesDTOs) {
-        return Observable.fromIterable(moviesDTOs)
-                .map(movieDTO -> new Movies(movieDTO.getTitle(), movieDTO.getPoster().getImage()))
-                .toList()
-                .toObservable()
-                .blockingFirst();
-    }
-}
-*/

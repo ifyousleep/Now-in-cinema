@@ -14,6 +14,7 @@ import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.di.LocalCiceroneHolder;
+import com.ifyou.nowincinema.ui.Extra;
 import com.ifyou.nowincinema.ui.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.activity.PosterActivity;
@@ -26,8 +27,6 @@ import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.SupportAppNavigator;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
-
-import static com.ifyou.nowincinema.ui.activity.PosterActivity.EXTRA_URL;
 
 /**
  * Created by Baranov on 13.04.2017.
@@ -89,7 +88,7 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                 protected Intent createActivityIntent(String screenKey, Object data) {
                     if (screenKey.equals(Screens.POSTER_SCREEN)) {
                         Intent intent = new Intent(getActivity(), PosterActivity.class);
-                        intent.putExtra(EXTRA_URL, (String) data);
+                        intent.putExtra(Extra.EXTRA_URL, (String) data);
                         return intent;
                     }
                     return null;

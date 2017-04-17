@@ -2,6 +2,7 @@ package com.ifyou.nowincinema.presentation.presenter;
 
 import com.ifyou.nowincinema.model.dto.movies.ListMovies;
 import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
+import com.ifyou.nowincinema.presentation.mappers.MoviesMapper;
 import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.app.CinemaApp;
@@ -25,8 +26,6 @@ import io.reactivex.disposables.Disposables;
 import ru.terrakok.cicerone.Router;
 import timber.log.Timber;
 
-import static com.ifyou.nowincinema.presentation.mappers.Mapper.fromResultsItemToMovies;
-
 @InjectViewState
 public class MovieListPresenter extends MvpPresenter<MovieListView> {
 
@@ -38,7 +37,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     private Disposable subscription = Disposables.empty();
     private Integer mPage = 1;
     private Integer mCountList = 0;
-    private List<ResultsItem> mResultsItems = new ArrayList<>();
+    private List<Movies> mResultsItems = new ArrayList<>();
     private String mTime;
     private String mCity;
 
@@ -102,7 +101,7 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     }
 
     public void clickItem(TransitionObject transitionObject) {
-        transitionObject.setUrl(mResultsItems.get(transitionObject.getInteger()).getPoster().getImage());
+        transitionObject.setUrl(mResultsItems.get(transitionObject.getInteger()).getPosterUrl());
         transitionObject.setInteger(mResultsItems.get(transitionObject.getInteger()).getId());
         Timber.d("ID = " + transitionObject.getInteger());
         router.navigateTo(Screens.DETAILS_SCREEN, transitionObject);
@@ -114,11 +113,9 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
     }
 
     private void onLoadingSuccess(ListMovies listMovies) {
-        List<ResultsItem> resultsItems;
-        resultsItems = listMovies.getResults();
-        mResultsItems.addAll(resultsItems);
-
-        List<Movies> moviesList = fromResultsItemToMovies(resultsItems);
+        List<ResultsItem> resultsItems = listMovies.getResults();
+        List<Movies> moviesList = MoviesMapper.fromResultsItemToMovies(resultsItems);
+        mResultsItems.addAll(moviesList);
         getViewState().showResultsItemList(moviesList);
         getViewState().activateLastItemViewListener();
     }
