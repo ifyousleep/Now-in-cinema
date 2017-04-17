@@ -33,8 +33,6 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    private String mUrl;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +40,16 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        mUrl = intent.getStringExtra(Extra.EXTRA_URL);
+        String mUrl = intent.getStringExtra(Extra.EXTRA_URL);
+        if (savedInstanceState == null)
+            mPosterPresenter.showPoster(mUrl);
+    }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void showPoster(String url) {
         Glide.with(this)
-                .load(mUrl)
+                .load(url)
                 .asBitmap()
                 .into(new BitmapImageViewTarget(mTouchImageView) {
                     @Override

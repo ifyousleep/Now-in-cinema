@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ShowingListView extends BaseListView {
 
-    void showResultsItemList(List<Showings> resultsItemList);
+    void showResultsItemList(List<Showings> showingsList);
 }

@@ -12,4 +12,8 @@ public class PosterPresenter extends MvpPresenter<PosterView> {
         getViewState().hideProgressBar();
     }
 
+    public void showPoster(String url) {
+        getViewState().showPoster(url);
+    }
+
 }
