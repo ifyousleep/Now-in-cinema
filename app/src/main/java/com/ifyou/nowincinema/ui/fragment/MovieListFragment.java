@@ -26,7 +26,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.GridSpacingItemDecoration;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
-import com.ifyou.nowincinema.ui.adapter.NewMovieListAdapter;
+import com.ifyou.nowincinema.ui.adapter.MovieListAdapter;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
     ProgressBar progressBar;
 
     private Unbinder mUnbinder;
-    private NewMovieListAdapter mAdapter;
+    private MovieListAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
     private View mFooter;
 
@@ -89,7 +89,7 @@ public class MovieListFragment extends MvpAppCompatFragment implements MovieList
             getActivity().setTitle(myCity);
         else
             getActivity().setTitle(R.string.app_name);
-        mAdapter = new NewMovieListAdapter();
+        mAdapter = new MovieListAdapter();
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mGridLayoutManager);

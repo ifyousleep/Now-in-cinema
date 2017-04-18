@@ -133,7 +133,10 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
 
     public void clickPlace(Integer pos) {
         String name = mResultsItems.get(pos).getPlaceTitle();
-        PlaceObject placeObject = new PlaceObject(name);
+        Double lat = mResultsItems.get(pos).getLat();
+        Double lon = mResultsItems.get(pos).getLon();
+        String address = mResultsItems.get(pos).getAddress();
+        PlaceObject placeObject = new PlaceObject(name, lat, lon, address);
         router.navigateTo(Screens.PLACE_SCREEN, placeObject);
     }
 

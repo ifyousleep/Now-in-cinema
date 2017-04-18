@@ -10,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.presentation.view.PlaceView;
@@ -33,8 +39,15 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
 
     @BindView(R.id.textName)
     TextView textName;
+    @BindView(R.id.mapView)
+    MapView mMapView;
+    @BindView(R.id.textAddress)
+    TextView textAddress;
 
     private Unbinder mUnbinder;
+    private GoogleMap googleMap;
+    private Double mLat;
+    private Double mLon;
 
     @ProvidePresenter
     PlacePresenter providePlacePresenter() {
@@ -71,8 +84,32 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
         PlaceObject placeObject = (PlaceObject) getArguments().getSerializable("PLACE");
         if (placeObject != null) {
             String name = placeObject.getName();
+            String address = placeObject.getAddress();
+            mLat = placeObject.getLat();
+            mLon = placeObject.getLon();
             textName.setText(name.toUpperCase());
+            textAddress.setText(address);
         }
+
+        mMapView.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void showMap() {
+        mMapView.getMapAsync(mMap -> {
+            googleMap = mMap;
+            LatLng cord = new LatLng(mLat, mLon);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(cord)
+                    .title(textName.getText().toString()));
+            CameraPosition cameraPosition = new CameraPosition
+                    .Builder()
+                    .target(cord)
+                    .zoom(14)
+                    .build();
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        });
     }
 
     @Override
@@ -90,6 +127,25 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mMapView.onDestroy();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }

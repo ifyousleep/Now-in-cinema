@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by Baranov on 06.04.2017.
  **/
 
-public class NewMovieListAdapter extends RecyclerBindableAdapter<Movies, NewMovieListAdapter.LinearViewHolder> {
+public class MovieListAdapter extends RecyclerBindableAdapter<Movies, MovieListAdapter.LinearViewHolder> {
 
     @Override
     protected int layoutId(int type) {

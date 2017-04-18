@@ -22,7 +22,10 @@ public class ShowingsMappers {
                         showDTO.getMovie().getPoster().getImage(),
                         showDTO.getMovie().getId(),
                         showDTO.getPlace().getId(),
-                        showDTO.getDatetime()))
+                        showDTO.getDatetime(),
+                        showDTO.getPlace().getCoords().getLat(),
+                        showDTO.getPlace().getCoords().getLon(),
+                        showDTO.getPlace().getAddress()))
                 .toList()
                 .toObservable()
                 .blockingFirst();

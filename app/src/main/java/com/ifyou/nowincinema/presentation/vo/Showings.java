@@ -13,8 +13,13 @@ public class Showings {
     private Integer mMovieId;
     private Integer mPlaceId;
     private Integer mTime;
+    private Double mLat;
+    private Double mLon;
+    private String mAddress;
 
-    public Showings(Integer id, String movieTitle, String placeTitle, String posterUrl, Integer movieId, Integer placeId, Integer time) {
+    public Showings(Integer id, String movieTitle, String placeTitle,
+                    String posterUrl, Integer movieId, Integer placeId,
+                    Integer time, Double lat, Double lon, String address) {
         mId = id;
         mMovieTitle = movieTitle;
         mPlaceTitle = placeTitle;
@@ -22,6 +27,13 @@ public class Showings {
         mMovieId = movieId;
         mPlaceId = placeId;
         mTime = time;
+        mLat = lat;
+        mLon = lon;
+        mAddress = address;
+    }
+
+    public String getAddress() {
+        return mAddress;
     }
 
     public Integer getId() {
@@ -50,5 +62,13 @@ public class Showings {
 
     public Integer getTime() {
         return mTime;
+    }
+
+    public Double getLat() {
+        return mLat;
+    }
+
+    public Double getLon() {
+        return mLon;
     }
 }

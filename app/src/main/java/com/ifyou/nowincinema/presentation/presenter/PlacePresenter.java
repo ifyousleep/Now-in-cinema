@@ -16,6 +16,12 @@ public class PlacePresenter extends MvpPresenter<PlaceView> {
         this.router = router;
     }
 
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        getViewState().showMap();
+    }
+
     public void onBackPressed() {
         router.exit();
     }
