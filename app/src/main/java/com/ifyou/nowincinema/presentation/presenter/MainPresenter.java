@@ -20,6 +20,12 @@ public class MainPresenter extends MvpPresenter<MainView> {
         CinemaApp.getAppComponent().inject(this);
     }
 
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        getViewState().initMap();
+    }
+
     public void showMenuPlace() {
         router.replaceScreen(Screens.PLACE_CONTAINER_SCREEN);
     }
@@ -39,4 +45,5 @@ public class MainPresenter extends MvpPresenter<MainView> {
     public void updateCity() {
         getViewState().restartApp();
     }
+
 }

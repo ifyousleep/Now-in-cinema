@@ -73,6 +73,7 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
                              final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_place, container, false);
         mUnbinder = ButterKnife.bind(this, v);
+        mMapView.onCreate(savedInstanceState);
         return v;
     }
 
@@ -90,8 +91,6 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
             textName.setText(name.toUpperCase());
             textAddress.setText(address);
         }
-
-        mMapView.onCreate(savedInstanceState);
     }
 
     @Override

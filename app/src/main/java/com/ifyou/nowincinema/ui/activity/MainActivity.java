@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.MapView;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.ui.Extra;
@@ -59,8 +60,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     private FilmContainerFragment mFilmContainerFragment;
     private PlaceContainerFragment mPlaceContainerFragment;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -76,6 +75,14 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
         if (savedInstanceState == null) {
             mBottomNavigationView.setSelectedItemId(getIntent().getIntExtra(Extra.EXTRA_ID, R.id.menu_film));
         }
+    }
+
+    @Override
+    public void initMap() {
+        runOnUiThread(() -> {
+            MapView mapView = new MapView(MainActivity.this);
+            mapView.onCreate(null);
+        });
     }
 
     private void initContainers() {
@@ -215,57 +222,4 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-    /*private Navigator navigator = new SupportFragmentNavigator(getSupportFragmentManager(),
-            R.id.activity_main_container) {
-        @Override
-        protected Fragment createFragment(String screenKey, Object data) {
-            String myCity = mSharedPrefs.getString("my_city", "");
-            switch (screenKey) {
-                case Screens.LIST_SCREEN:
-                    return MovieListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
-                case Screens.DETAILS_SCREEN:
-                    return DetailsFragment.newInstance(((TransitionObject) data));
-                case Screens.TOUCH_SCREEN:
-                    return TouchImageFragment.newInstance(((TransitionObject) data));
-                case Screens.SHOWING_SCREEN:
-                    return ShowingListFragment.newInstance();
-                default:
-                    throw new RuntimeException("Unknown screen key!");
-            }
-        }
-
-        @Override
-        protected void showSystemMessage(String message) {
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected void exit() {
-            finish();
-        }
-
-        @Override
-        public void applyCommand(Command command) {
-            if (command instanceof Forward) {
-                if (((Forward) command).getScreenKey().equals(Screens.DETAILS_SCREEN)) {
-                    Forward forward = (Forward) command;
-                    Fragment fragment = createFragment(forward.getScreenKey(), forward.getTransitionData());
-                    if (fragment == null) {
-                        unknownScreen(command);
-                        return;
-                    }
-                    TransitionObject transitionObject = (TransitionObject) forward.getTransitionData();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .addSharedElement(transitionObject.getView(), "image")
-                            .replace(R.id.activity_main_container, fragment)
-                            .addToBackStack(forward.getScreenKey())
-                            .commit();
-                } else
-                    super.applyCommand(command);
-            } else
-                super.applyCommand(command);
-        }
-    };*/
 }

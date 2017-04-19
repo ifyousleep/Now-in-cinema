@@ -11,4 +11,7 @@ public interface MainView extends MvpView {
 
     @StateStrategyType(SkipStrategy.class)
     void restartApp();
+
+    @StateStrategyType(SkipStrategy.class)
+    void initMap();
 }
