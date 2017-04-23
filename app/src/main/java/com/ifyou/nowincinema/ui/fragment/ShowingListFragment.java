@@ -4,12 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
@@ -20,35 +15,21 @@ import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.ShowingListAdapter;
 import com.ifyou.nowincinema.R;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 import timber.log.Timber;
 
-public class ShowingListFragment extends MvpAppCompatFragment implements ShowingListView, BackButtonListener, ItemClickSupport.OnRowClickListener {
+public class ShowingListFragment extends ListFragment implements ShowingListView, BackButtonListener, ItemClickSupport.OnRowClickListener {
 
     @InjectPresenter
     ShowingListPresenter mShowingListPresenter;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-
-    private Unbinder mUnbinder;
     private ShowingListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     private View mFooter;
-
-    private static String sCity = "city";
-    private static String sMyCity = "my_city";
 
     @ProvidePresenter
     ShowingListPresenter provideShowingListPresenter() {
@@ -66,21 +47,13 @@ public class ShowingListFragment extends MvpAppCompatFragment implements Showing
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_showing_list, container, false);
-        mUnbinder = ButterKnife.bind(this, v);
-        return v;
+    protected Integer setId() {
+        return R.layout.fragment_showing_list;
     }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String myCity = getArguments().getString(sMyCity, "");
-        if (myCity.length() > 0)
-            getActivity().setTitle(myCity);
-        else
-            getActivity().setTitle(R.string.app_name);
         mAdapter = new ShowingListAdapter(this);
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
@@ -119,55 +92,19 @@ public class ShowingListFragment extends MvpAppCompatFragment implements Showing
     }
 
     @Override
-    public void hideProgressBar() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public boolean onBackPressed() {
         mShowingListPresenter.onBackPressed();
         return true;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mUnbinder.unbind();
-    }
+    protected void onScrolled() {
+        int lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition() + 1;
+        int modelsCount = mAdapter.getItemCount();
 
-    @Override
-    public void activateLastItemViewListener() {
-        enableSearchOnFinish();
-    }
-
-    @Override
-    public void disableLastItemViewListener() {
-        disableSearchOnFinish();
-    }
-
-    private void enableSearchOnFinish() {
-        recyclerView.addOnScrollListener(new FinishScrollListener());
-    }
-
-    private void disableSearchOnFinish() {
-        recyclerView.clearOnScrollListeners();
-    }
-
-    private class FinishScrollListener extends RecyclerView.OnScrollListener {
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            int lastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition() + 1;
-            int modelsCount = mAdapter.getItemCount();
-
-            if (lastVisibleItemPosition == modelsCount) {
-                mShowingListPresenter.onLastItemViewed();
-                Timber.d("onScrolled");
-            }
+        if (lastVisibleItemPosition == modelsCount) {
+            mShowingListPresenter.onLastItemViewed();
+            Timber.d("onScrolled");
         }
     }
 }

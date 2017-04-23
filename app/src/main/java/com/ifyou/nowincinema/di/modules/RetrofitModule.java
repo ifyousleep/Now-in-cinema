@@ -54,7 +54,7 @@ public class RetrofitModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setDateFormat("HH:mm")
                 .create();
     }
 

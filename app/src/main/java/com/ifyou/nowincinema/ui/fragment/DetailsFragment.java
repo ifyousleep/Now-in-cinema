@@ -140,7 +140,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     @SuppressWarnings("deprecation")
     private Spanned fromHtml(String html) {
         Spanned result;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
