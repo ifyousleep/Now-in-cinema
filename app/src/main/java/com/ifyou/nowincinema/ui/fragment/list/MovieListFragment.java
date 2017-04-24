@@ -1,10 +1,9 @@
-package com.ifyou.nowincinema.ui.fragment;
+package com.ifyou.nowincinema.ui.fragment.list;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.view.View;
 
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
@@ -14,6 +13,7 @@ import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.GridSpacingItemDecoration;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.MovieListAdapter;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -30,7 +30,6 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
 
     private MovieListAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
-    private View mFooter;
 
     @ProvidePresenter
     MovieListPresenter provideMovieListPresenter() {
@@ -53,8 +52,7 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
     }
 
     @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void initList() {
         mAdapter = new MovieListAdapter();
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
@@ -62,12 +60,6 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getContext(), R.dimen.item_offset));
-
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
-        mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->

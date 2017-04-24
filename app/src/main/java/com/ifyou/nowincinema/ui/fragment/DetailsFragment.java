@@ -83,6 +83,8 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
             setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
+            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.fade));
+            setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.fade));
         }
     }
 

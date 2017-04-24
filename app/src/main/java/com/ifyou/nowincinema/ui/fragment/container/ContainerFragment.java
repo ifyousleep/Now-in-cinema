@@ -19,9 +19,9 @@ import com.ifyou.nowincinema.presentation.vo.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.activity.PosterActivity;
 import com.ifyou.nowincinema.ui.fragment.DetailsFragment;
-import com.ifyou.nowincinema.ui.fragment.MovieListFragment;
+import com.ifyou.nowincinema.ui.fragment.list.MovieListFragment;
 import com.ifyou.nowincinema.ui.fragment.PlaceFragment;
-import com.ifyou.nowincinema.ui.fragment.ShowingListFragment;
+import com.ifyou.nowincinema.ui.fragment.list.ShowingListFragment;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import javax.inject.Inject;

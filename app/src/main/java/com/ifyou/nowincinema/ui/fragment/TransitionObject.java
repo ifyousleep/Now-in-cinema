@@ -14,7 +14,7 @@ public class TransitionObject implements Serializable {
     private Integer integer;
     private String url;
 
-    TransitionObject(View view, Integer integer, String url) {
+    public TransitionObject(View view, Integer integer, String url) {
         this.view = view;
         this.integer = integer;
         this.url = url;

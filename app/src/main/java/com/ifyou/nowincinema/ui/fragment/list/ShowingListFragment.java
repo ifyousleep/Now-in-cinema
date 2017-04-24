@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.fragment;
+package com.ifyou.nowincinema.ui.fragment.list;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +13,7 @@ import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.ShowingListAdapter;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -29,7 +30,6 @@ public class ShowingListFragment extends ListFragment implements ShowingListView
 
     private ShowingListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
-    private View mFooter;
 
     @ProvidePresenter
     ShowingListPresenter provideShowingListPresenter() {
@@ -52,8 +52,7 @@ public class ShowingListFragment extends ListFragment implements ShowingListView
     }
 
     @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void initList() {
         mAdapter = new ShowingListAdapter(this);
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setHasFixedSize(true);
@@ -61,16 +60,10 @@ public class ShowingListFragment extends ListFragment implements ShowingListView
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->
-                    mShowingListPresenter.clickPlace(pos)
+                        mShowingListPresenter.clickPlace(pos)
         );
-
-        mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.ifyou.nowincinema.ui.fragment;
+package com.ifyou.nowincinema.ui.fragment.list;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -31,10 +31,13 @@ public abstract class ListFragment extends MvpAppCompatFragment implements BaseL
     private Unbinder mUnbinder;
     static String sCity = "city";
     static String sMyCity = "my_city";
+    protected View mFooter;
 
     protected abstract Integer setId();
 
     protected abstract void onScrolled();
+
+    protected abstract void initList();
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -52,6 +55,8 @@ public abstract class ListFragment extends MvpAppCompatFragment implements BaseL
             getActivity().setTitle(myCity);
         else
             getActivity().setTitle(R.string.app_name);
+        initList();
+        mFooter = getLayoutInflater(savedInstanceState).inflate(R.layout.item_loading, recyclerView, false);
     }
 
     @Override
