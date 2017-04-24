@@ -16,12 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.presentation.view.DetailsView;
@@ -32,6 +26,9 @@ import com.ifyou.nowincinema.R;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,8 +80,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
             setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
-            setExitTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.fade));
-            setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.fade));
         }
     }
 
@@ -109,24 +104,20 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     @Override
     public void showPoster(String url) {
-        Glide.with(getContext())
+        Picasso.with(getContext())
                 .load(url)
-                .dontAnimate()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(new RequestListener<String, GlideDrawable>() {
+                .noFade()
+                .into(poster, new Callback() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    public void onSuccess() {
                         startPostponedEnterTransition();
-                        return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public void onError() {
                         startPostponedEnterTransition();
-                        return false;
                     }
-                })
-                .into(poster);
+                });
     }
 
     @Override

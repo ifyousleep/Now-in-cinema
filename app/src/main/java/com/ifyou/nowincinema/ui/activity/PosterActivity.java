@@ -1,24 +1,20 @@
 package com.ifyou.nowincinema.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.ifyou.nowincinema.presentation.view.PosterView;
 import com.ifyou.nowincinema.presentation.presenter.PosterPresenter;
+import com.ifyou.nowincinema.R;
+import com.ifyou.nowincinema.ui.Extra;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
-
-import com.ifyou.nowincinema.R;
-
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.ifyou.nowincinema.ui.Extra;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,17 +44,10 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
     @SuppressWarnings("unchecked")
     @Override
     public void showPoster(String url) {
-        Glide.with(this)
+        Picasso.with(this)
                 .load(url)
-                .asBitmap()
-                .into(new BitmapImageViewTarget(mTouchImageView) {
-                    @Override
-                    public void onResourceReady(Bitmap drawable, GlideAnimation anim) {
-                        super.onResourceReady(drawable, anim);
-                        mPosterPresenter.hideProgressBar();
-                        mTouchImageView.setImageBitmap(drawable);
-                    }
-                });
+                .into(mTouchImageView);
+        mPosterPresenter.hideProgressBar();
     }
 
     @Override

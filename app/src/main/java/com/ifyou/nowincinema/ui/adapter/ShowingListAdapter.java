@@ -6,13 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
 import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -79,10 +77,8 @@ public class ShowingListAdapter extends RecyclerBindableAdapter<Showings, Showin
             String formattedDate = sdf.format(date);
             textTime.setText(formattedDate);
 
-            Glide.with(imageView.getContext())
+            Picasso.with(imageView.getContext())
                     .load(item.getPosterUrl())
-                    .dontAnimate()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
             ViewCompat.setTransitionName(imageView, item.getId() + "_image");
         }

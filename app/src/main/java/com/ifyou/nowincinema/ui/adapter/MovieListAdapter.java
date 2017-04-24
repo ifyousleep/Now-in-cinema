@@ -6,12 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
+
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,10 +58,8 @@ public class MovieListAdapter extends RecyclerBindableAdapter<Movies, MovieListA
 
         void bindView(Movies item) {
             text.setText(item.getTitle());
-            Glide.with(imageView.getContext())
+            Picasso.with(imageView.getContext())
                     .load(item.getPosterUrl())
-                    .dontAnimate()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
             ViewCompat.setTransitionName(imageView, item.getId() + "_image");
         }

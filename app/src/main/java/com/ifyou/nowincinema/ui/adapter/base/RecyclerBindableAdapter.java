@@ -131,8 +131,9 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
         if (manager instanceof LinearLayoutManager) {
             int orientation = ((LinearLayoutManager) manager).getOrientation();
             if (orientation == LinearLayoutManager.VERTICAL) {
-                layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams = viewGroup.getLayoutParams() == null ?
+                        new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT) : viewGroup.getLayoutParams();
             } else {
                 layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
@@ -165,8 +166,10 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
     private void prepareHeaderFooter(HeaderFooterViewHolder vh, View view) {
         //if it's a staggered grid, span the whole layout
         if (manager instanceof StaggeredGridLayoutManager) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = vh.itemView.getLayoutParams() == null ?
+                    new StaggeredGridLayoutManager.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                    : (StaggeredGridLayoutManager.LayoutParams) vh.itemView.getLayoutParams();
             layoutParams.setFullSpan(true);
             vh.itemView.setLayoutParams(layoutParams);
         }

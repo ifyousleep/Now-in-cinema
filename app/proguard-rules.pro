@@ -58,3 +58,8 @@
 -keepattributes ElementList, Root
 
 -keep class com.ifyou.nowincinema.model.** { *; }
+
+## Square Picasso specific rules ##
+## https://square.github.io/picasso/ ##
+
+-dontwarn com.squareup.okhttp.**

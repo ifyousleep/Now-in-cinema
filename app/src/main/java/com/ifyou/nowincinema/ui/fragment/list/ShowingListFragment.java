@@ -52,6 +52,11 @@ public class ShowingListFragment extends ListFragment implements ShowingListView
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected void initList() {
         mAdapter = new ShowingListAdapter(this);
         mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
