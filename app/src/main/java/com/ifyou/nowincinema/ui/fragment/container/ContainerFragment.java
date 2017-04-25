@@ -128,9 +128,9 @@ public class ContainerFragment extends Fragment implements RouterProvider, BackB
                 public void applyCommand(Command command) {
                     if (command instanceof Forward) {
                         Forward forward = (Forward) command;
-                        TransitionObject transitionObject = (TransitionObject) forward.getTransitionData();
                         switch (((Forward) command).getScreenKey()) {
                             case Screens.DETAILS_SCREEN:
+                                TransitionObject tObjectDetails = (TransitionObject) forward.getTransitionData();
                                 Fragment fragment = createFragment(forward.getScreenKey(), forward.getTransitionData());
                                 if (fragment == null) {
                                     unknownScreen(command);
@@ -138,18 +138,19 @@ public class ContainerFragment extends Fragment implements RouterProvider, BackB
                                 }
                                 getChildFragmentManager()
                                         .beginTransaction()
-                                        .addSharedElement(transitionObject.getView(), "image")
+                                        .addSharedElement(tObjectDetails.getView(), "image")
                                         .replace(R.id.ftc_container, fragment)
                                         .addToBackStack(forward.getScreenKey())
                                         .commit();
                                 break;
                             case Screens.POSTER_SCREEN:
+                                TransitionObject tObjectPoster = (TransitionObject) forward.getTransitionData();
                                 Intent activityIntent = createActivityIntent(forward.getScreenKey(), forward.getTransitionData());
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     ActivityOptionsCompat options = ActivityOptionsCompat.
                                             makeSceneTransitionAnimation(getActivity(),
-                                                    transitionObject.getView(),
-                                                    ViewCompat.getTransitionName(transitionObject.getView()));
+                                                    tObjectPoster.getView(),
+                                                    ViewCompat.getTransitionName(tObjectPoster.getView()));
                                     if (activityIntent != null) {
                                         startActivity(activityIntent, options.toBundle());
                                     }

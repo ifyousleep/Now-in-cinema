@@ -1,6 +1,5 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
-
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
@@ -8,12 +7,13 @@ import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
 import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
 import com.ifyou.nowincinema.presentation.mappers.ShowingsMappers;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
 import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.presentation.vo.PlaceObject;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
+
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
