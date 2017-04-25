@@ -1,6 +1,7 @@
 package com.ifyou.nowincinema.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import com.ifyou.nowincinema.ui.Extra;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -34,20 +36,33 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_poster);
         ButterKnife.bind(this);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mTouchImageView.setTransitionName("image");
+        }
+        supportPostponeEnterTransition();
         Intent intent = getIntent();
         String mUrl = intent.getStringExtra(Extra.EXTRA_URL);
         if (savedInstanceState == null)
             mPosterPresenter.showPoster(mUrl);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void showPoster(String url) {
         Picasso.with(this)
                 .load(url)
-                .into(mTouchImageView);
-        mPosterPresenter.hideProgressBar();
+                .into(mTouchImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mPosterPresenter.hideProgressBar();
+                        supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        mPosterPresenter.hideProgressBar();
+                        supportStartPostponedEnterTransition();
+                    }
+                });
     }
 
     @Override

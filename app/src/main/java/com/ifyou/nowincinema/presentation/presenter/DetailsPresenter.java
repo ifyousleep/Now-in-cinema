@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -38,8 +39,8 @@ public class DetailsPresenter extends MvpPresenter<DetailsView> {
         this.router = router;
     }
 
-    public void showTouch(String url) {
-        router.navigateTo(Screens.POSTER_SCREEN, url);
+    public void showTouch(TransitionObject transitionObject) {
+        router.navigateTo(Screens.POSTER_SCREEN, transitionObject);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.ifyou.nowincinema.ui.fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.transition.TransitionInflater;
@@ -99,7 +100,9 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
             mDetailsPresenter.loadData(getArguments().getInt("ID"));
             mDetailsPresenter.showPoster(getArguments().getString("URL"));
         }
-        poster.setOnClickListener(v -> mDetailsPresenter.showTouch(getArguments().getString("URL")));
+        ViewCompat.setTransitionName(poster, "image");
+        TransitionObject transitionObject = new TransitionObject(poster, 0, getArguments().getString("URL"));
+        poster.setOnClickListener(v -> mDetailsPresenter.showTouch(transitionObject));
     }
 
     @Override

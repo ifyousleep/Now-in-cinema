@@ -52,11 +52,6 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 
--keepattributes Signature,RuntimeVisibleAnnotations,AnnotationDefault
--keepattributes EnclosingMethod
--keepattributes InnerClasses
--keepattributes ElementList, Root
-
 -keep class com.ifyou.nowincinema.model.** { *; }
 
 ## Square Picasso specific rules ##

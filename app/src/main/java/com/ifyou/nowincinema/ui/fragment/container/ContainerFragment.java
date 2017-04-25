@@ -2,9 +2,12 @@ package com.ifyou.nowincinema.ui.fragment.container;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +40,7 @@ import ru.terrakok.cicerone.commands.Forward;
  * Created by Baranov on 13.04.2017.
  **/
 
-public class ContainerFragment  extends Fragment implements RouterProvider, BackButtonListener {
+public class ContainerFragment extends Fragment implements RouterProvider, BackButtonListener {
 
     @Inject
     protected LocalCiceroneHolder ciceroneHolder;
@@ -93,7 +96,7 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                 protected Intent createActivityIntent(String screenKey, Object data) {
                     if (screenKey.equals(Screens.POSTER_SCREEN)) {
                         Intent intent = new Intent(getActivity(), PosterActivity.class);
-                        intent.putExtra(Extra.EXTRA_URL, (String) data);
+                        intent.putExtra(Extra.EXTRA_URL, ((TransitionObject) data).getUrl());
                         return intent;
                     }
                     return null;
@@ -124,22 +127,43 @@ public class ContainerFragment  extends Fragment implements RouterProvider, Back
                 @Override
                 public void applyCommand(Command command) {
                     if (command instanceof Forward) {
-                        if (((Forward) command).getScreenKey().equals(Screens.DETAILS_SCREEN)) {
-                            Forward forward = (Forward) command;
-                            Fragment fragment = createFragment(forward.getScreenKey(), forward.getTransitionData());
-                            if (fragment == null) {
-                                unknownScreen(command);
-                                return;
-                            }
-                            TransitionObject transitionObject = (TransitionObject) forward.getTransitionData();
-                            getChildFragmentManager()
-                                    .beginTransaction()
-                                    .addSharedElement(transitionObject.getView(), "image")
-                                    .replace(R.id.ftc_container, fragment)
-                                    .addToBackStack(forward.getScreenKey())
-                                    .commit();
-                        } else
-                            super.applyCommand(command);
+                        Forward forward = (Forward) command;
+                        TransitionObject transitionObject = (TransitionObject) forward.getTransitionData();
+                        switch (((Forward) command).getScreenKey()) {
+                            case Screens.DETAILS_SCREEN:
+                                Fragment fragment = createFragment(forward.getScreenKey(), forward.getTransitionData());
+                                if (fragment == null) {
+                                    unknownScreen(command);
+                                    return;
+                                }
+                                getChildFragmentManager()
+                                        .beginTransaction()
+                                        .addSharedElement(transitionObject.getView(), "image")
+                                        .replace(R.id.ftc_container, fragment)
+                                        .addToBackStack(forward.getScreenKey())
+                                        .commit();
+                                break;
+                            case Screens.POSTER_SCREEN:
+                                Intent activityIntent = createActivityIntent(forward.getScreenKey(), forward.getTransitionData());
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                                            makeSceneTransitionAnimation(getActivity(),
+                                                    transitionObject.getView(),
+                                                    ViewCompat.getTransitionName(transitionObject.getView()));
+                                    if (activityIntent != null) {
+                                        startActivity(activityIntent, options.toBundle());
+                                    }
+                                    return;
+                                } else {
+                                    if (activityIntent != null) {
+                                        startActivity(activityIntent);
+                                    }
+                                }
+                                break;
+                            default:
+                                super.applyCommand(command);
+                                break;
+                        }
                     } else
                         super.applyCommand(command);
                 }
