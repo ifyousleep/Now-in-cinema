@@ -48,14 +48,6 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     ImageView poster;
     @BindView(R.id.textName)
     TextView textTitle;
-    @BindView(R.id.textYear)
-    TextView textYear;
-    @BindView(R.id.textImdb)
-    TextView textImdb;
-    @BindView(R.id.textDirector)
-    TextView textDirector;
-    @BindView(R.id.textStars)
-    TextView textStars;
 
     private Unbinder mUnbinder;
 
@@ -125,12 +117,17 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
 
     @Override
     public void showAbout(Details movie) {
-        textAbout.setText(fromHtml(movie.getAbout()));
+        String stringBuilder = "";
+        stringBuilder += String.format(getString(R.string.country_year), movie.getCountry(), String.valueOf(movie.getYear()));
+        stringBuilder += "\n\n";
+        stringBuilder += fromHtml(movie.getAbout());
+        stringBuilder += String.format(getString(R.string.director), movie.getDirector());
+        stringBuilder += "\n";
+        stringBuilder += String.format(getString(R.string.stars), movie.getStars());
+        stringBuilder += "\n";
+        stringBuilder += String.format(getString(R.string.imdb), String.valueOf(movie.getImdb()));
         textTitle.setText(movie.getTitle());
-        textYear.setText(String.format(getString(R.string.country_year), movie.getCountry(), String.valueOf(movie.getYear())));
-        textImdb.setText(String.format(getString(R.string.imdb), String.valueOf(movie.getImdb())));
-        textDirector.setText(String.format(getString(R.string.director), movie.getDirector()));
-        textStars.setText(String.format(getString(R.string.stars), movie.getStars()));
+        textAbout.setText(stringBuilder);
     }
 
     @SuppressWarnings("deprecation")

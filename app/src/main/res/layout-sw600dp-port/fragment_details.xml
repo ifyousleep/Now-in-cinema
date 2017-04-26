@@ -32,37 +32,11 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textYear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textName"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            android:textStyle="italic" />
-
-        <TextView
             android:id="@+id/textAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textYear" />
-
-        <TextView
-            android:id="@+id/textDirector"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textAbout" />
-
-        <TextView
-            android:id="@+id/textStars"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textDirector" />
-
-        <TextView
-            android:id="@+id/textImdb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textStars" />
+            android:layout_below="@+id/textName"
+            android:textIsSelectable="true"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
