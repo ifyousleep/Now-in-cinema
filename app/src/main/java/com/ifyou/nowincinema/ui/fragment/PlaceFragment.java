@@ -63,7 +63,7 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
     public static PlaceFragment newInstance(PlaceObject placeObject) {
         PlaceFragment fragment = new PlaceFragment();
         Bundle args = new Bundle();
-        args.putSerializable("PLACE", placeObject);
+        args.putParcelable("PLACE", placeObject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +82,7 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.app_place);
 
-        PlaceObject placeObject = (PlaceObject) getArguments().getSerializable("PLACE");
+        PlaceObject placeObject = getArguments().getParcelable("PLACE");
         if (placeObject != null) {
             String name = placeObject.getName();
             String address = placeObject.getAddress();

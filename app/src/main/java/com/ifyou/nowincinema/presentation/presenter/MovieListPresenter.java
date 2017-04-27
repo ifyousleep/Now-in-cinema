@@ -64,6 +64,10 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         Timber.d(mCity);
     }
 
+    /*public void updateData(int page) {
+        loadData(page);
+    }*/
+
     public void onLastItemViewed() {
         mPage += 1;
         getViewState().disableLastItemViewListener();

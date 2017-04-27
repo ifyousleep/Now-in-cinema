@@ -2,9 +2,8 @@ package com.ifyou.nowincinema.ui.fragment.list;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
@@ -64,10 +63,7 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(mAdapter);
-        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
-        if (animator instanceof SimpleItemAnimator) {
-            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-        }
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getContext(), R.dimen.item_offset));
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
@@ -105,4 +101,9 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         mMovieListPresenter.onBackPressed();
         return true;
     }
+
+    /*@Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateEvent(UpdateEvent event) {
+        mMovieListPresenter.updateData(1);
+    }*/
 }

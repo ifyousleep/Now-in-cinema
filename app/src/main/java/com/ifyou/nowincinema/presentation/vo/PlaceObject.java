@@ -1,12 +1,13 @@
 package com.ifyou.nowincinema.presentation.vo;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Baranov on 14.04.2017.
  **/
 
-public class PlaceObject implements Serializable {
+public class PlaceObject implements Parcelable {
 
     private String mName;
     private Double mLat;
@@ -40,5 +41,35 @@ public class PlaceObject implements Serializable {
         mName = name;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mName);
+        dest.writeString(this.mAddress);
+        dest.writeDouble(this.mLat);
+        dest.writeDouble(this.mLon);
+    }
+
+    protected PlaceObject(Parcel in) {
+        this.mName = in.readString();
+        this.mAddress = in.readString();
+        this.mLat = in.readDouble();
+        this.mLon = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<PlaceObject> CREATOR = new Parcelable.Creator<PlaceObject>() {
+        @Override
+        public PlaceObject createFromParcel(Parcel source) {
+            return new PlaceObject(source);
+        }
+
+        @Override
+        public PlaceObject[] newArray(int size) {
+            return new PlaceObject[size];
+        }
+    };
 }

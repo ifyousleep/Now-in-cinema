@@ -51,10 +51,8 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
 
     @Inject
     NavigatorHolder navigatorHolder;
-
     @Inject
     Router router;
-
     @Inject
     SharedPreferences mSharedPrefs;
 
@@ -69,6 +67,15 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Fade fade = new Fade();
+            fade.excludeTarget(R.id.activity_main_appbar, true);
+            fade.excludeTarget(android.R.id.statusBarBackground, true);
+            fade.excludeTarget(android.R.id.navigationBarBackground, true);
+            getWindow().setEnterTransition(fade);
+            getWindow().setExitTransition(fade);
+        }*/
 
         initContainers();
         setupBottomNavigationView();
@@ -87,10 +94,12 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     }
 
     private void initContainers() {
+        Integer sFragmentFilm = 0;
+        Integer sFragmentPlace = 1;
         FragmentManager fm = getSupportFragmentManager();
         mFilmContainerFragment = (FilmContainerFragment) fm.findFragmentByTag("FILM");
         if (mFilmContainerFragment == null) {
-            mFilmContainerFragment = FilmContainerFragment.getNewInstance("FILM");
+            mFilmContainerFragment = FilmContainerFragment.getNewInstance(sFragmentFilm);
             fm.beginTransaction()
                     .add(R.id.activity_main_container, mFilmContainerFragment, "FILM")
                     .detach(mFilmContainerFragment).commitNow();
@@ -98,7 +107,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
 
         mPlaceContainerFragment = (PlaceContainerFragment) fm.findFragmentByTag("PLACE");
         if (mPlaceContainerFragment == null) {
-            mPlaceContainerFragment = PlaceContainerFragment.getNewInstance("PLACE");
+            mPlaceContainerFragment = PlaceContainerFragment.getNewInstance(sFragmentPlace);
             fm.beginTransaction()
                     .add(R.id.activity_main_container, mPlaceContainerFragment, "PLACE")
                     .detach(mPlaceContainerFragment).commitNow();
@@ -134,7 +143,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     protected void onResume() {
         super.onResume();
         navigatorHolder.setNavigator(navigator);
-
     }
 
     @Override
@@ -216,6 +224,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
 
     @Override
     public void restartApp() {
+        //EventBus.getDefault().post(new UpdateEvent("Hello everyone!"));
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Extra.EXTRA_ID, mBottomNavigationView.getSelectedItemId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

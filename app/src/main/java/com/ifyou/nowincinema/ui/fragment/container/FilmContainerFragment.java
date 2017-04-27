@@ -19,10 +19,10 @@ public class FilmContainerFragment extends ContainerFragment {
         return ciceroneHolder.getCicerone(getContainerName());
     }
 
-    public static FilmContainerFragment getNewInstance(String name) {
+    public static FilmContainerFragment getNewInstance(Integer name) {
         FilmContainerFragment fragment = new FilmContainerFragment();
         Bundle arguments = new Bundle();
-        arguments.putString(EXTRA_NAME, name);
+        arguments.putInt(EXTRA_NAME, name);
         fragment.setArguments(arguments);
         return fragment;
     }

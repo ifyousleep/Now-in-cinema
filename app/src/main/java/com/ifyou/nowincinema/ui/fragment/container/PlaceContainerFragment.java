@@ -19,10 +19,10 @@ public class PlaceContainerFragment extends ContainerFragment {
         return ciceroneHolder.getCicerone(getContainerName());
     }
 
-    public static PlaceContainerFragment getNewInstance(String name) {
+    public static PlaceContainerFragment getNewInstance(Integer name) {
         PlaceContainerFragment fragment = new PlaceContainerFragment();
         Bundle arguments = new Bundle();
-        arguments.putString(EXTRA_NAME, name);
+        arguments.putInt(EXTRA_NAME, name);
         fragment.setArguments(arguments);
         return fragment;
     }

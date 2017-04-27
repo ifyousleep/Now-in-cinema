@@ -38,6 +38,11 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
         ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mTouchImageView.setTransitionName("image");
+            /*Fade fade = new Fade();
+            fade.excludeTarget(android.R.id.statusBarBackground, true);
+            fade.excludeTarget(android.R.id.navigationBarBackground, true);
+            getWindow().setEnterTransition(fade);
+            getWindow().setExitTransition(fade);*/
         }
         supportPostponeEnterTransition();
         Intent intent = getIntent();

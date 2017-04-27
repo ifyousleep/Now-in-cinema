@@ -34,8 +34,7 @@
             android:id="@+id/textAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textName"
-            android:textIsSelectable="true"/>
+            android:layout_below="@+id/textName" />
 
         <ProgressBar
             android:id="@+id/progressBar"

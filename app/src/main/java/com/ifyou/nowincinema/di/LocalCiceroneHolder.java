@@ -1,6 +1,6 @@
 package com.ifyou.nowincinema.di;
 
-import java.util.HashMap;
+import android.util.SparseArray;
 
 import ru.terrakok.cicerone.Cicerone;
 import ru.terrakok.cicerone.Router;
@@ -10,14 +10,14 @@ import ru.terrakok.cicerone.Router;
  **/
 
 public class LocalCiceroneHolder {
-    private HashMap<String, Cicerone<Router>> containers;
+    private SparseArray<Cicerone<Router>> containers;
 
     public LocalCiceroneHolder() {
-        containers = new HashMap<>();
+        containers = new SparseArray<>();
     }
 
-    public Cicerone<Router> getCicerone(String containerTag) {
-        if (!containers.containsKey(containerTag)) {
+    public Cicerone<Router> getCicerone(Integer containerTag) {
+        if (containers.indexOfKey(containerTag) < 0) {
             containers.put(containerTag, Cicerone.create());
         }
         return containers.get(containerTag);

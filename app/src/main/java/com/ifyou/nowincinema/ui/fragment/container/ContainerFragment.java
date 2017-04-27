@@ -51,8 +51,8 @@ public class ContainerFragment extends Fragment implements RouterProvider, BackB
     public static final String EXTRA_NAME = "extra_name";
     private Navigator navigator;
 
-    public String getContainerName() {
-        return getArguments().getString(EXTRA_NAME);
+    public Integer getContainerName() {
+        return getArguments().getInt(EXTRA_NAME, 0);
     }
 
     @Override
