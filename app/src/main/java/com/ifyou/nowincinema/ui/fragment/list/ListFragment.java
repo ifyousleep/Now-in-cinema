@@ -13,6 +13,8 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.presentation.view.BaseListView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -75,7 +77,7 @@ public abstract class ListFragment extends MvpAppCompatFragment implements BaseL
         mUnbinder.unbind();
     }
 
-    /*@Override
+    @Override
     public void onStart() {
         EventBus.getDefault().register(this);
         super.onStart();
@@ -85,7 +87,7 @@ public abstract class ListFragment extends MvpAppCompatFragment implements BaseL
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }*/
+    }
 
     @Override
     public void activateLastItemViewListener() {

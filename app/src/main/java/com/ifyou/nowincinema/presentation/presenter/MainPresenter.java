@@ -42,8 +42,8 @@ public class MainPresenter extends MvpPresenter<MainView> {
         getViewState().showDialog();
     }
 
-    public void updateCity() {
-        getViewState().restartApp();
+    public void updateCity(String city) {
+        getViewState().restartApp(city);
     }
 
 }

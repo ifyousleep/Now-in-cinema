@@ -10,7 +10,7 @@ public interface MainView extends MvpView {
     void showDialog();
 
     @StateStrategyType(SkipStrategy.class)
-    void restartApp();
+    void restartApp(String city);
 
     @StateStrategyType(SkipStrategy.class)
     void initMap();

@@ -58,3 +58,9 @@
 ## https://square.github.io/picasso/ ##
 
 -dontwarn com.squareup.okhttp.**
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }

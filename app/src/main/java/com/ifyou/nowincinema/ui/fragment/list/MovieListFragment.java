@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.View;
 
+import com.ifyou.nowincinema.bus.UpdateFilmEvent;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
@@ -18,6 +20,10 @@ import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -102,8 +108,15 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         return true;
     }
 
-    /*@Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateEvent(UpdateEvent event) {
-        mMovieListPresenter.updateData(1);
-    }*/
+    private void updateCity(String city) {
+        EventBus.getDefault().removeStickyEvent(UpdateFilmEvent.class);
+        mMovieListPresenter.updateData(1, city);
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onStickyUpdateEvent(UpdateFilmEvent event) {
+        progressBar.setVisibility(View.VISIBLE);
+        initList();
+        updateCity(event.getCity());
+    }
 }

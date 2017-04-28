@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.ifyou.nowincinema.bus.UpdatePlaceEvent;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
@@ -18,6 +19,10 @@ import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -104,5 +109,17 @@ public class ShowingListFragment extends ListFragment implements ShowingListView
             mShowingListPresenter.onLastItemViewed();
             Timber.d("onScrolled");
         }
+    }
+
+    private void updateCity(String city) {
+        EventBus.getDefault().removeStickyEvent(UpdatePlaceEvent.class);
+        showError(city);
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onStickyUpdateEvent(UpdatePlaceEvent event) {
+        progressBar.setVisibility(View.VISIBLE);
+        initList();
+        updateCity(event.getCity());
     }
 }

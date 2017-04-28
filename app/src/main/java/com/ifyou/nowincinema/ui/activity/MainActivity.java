@@ -1,6 +1,5 @@
 package com.ifyou.nowincinema.ui.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +12,8 @@ import android.view.MenuItem;
 
 import com.google.android.gms.maps.MapView;
 
+import com.ifyou.nowincinema.bus.UpdateFilmEvent;
+import com.ifyou.nowincinema.bus.UpdatePlaceEvent;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.ui.Extra;
@@ -26,6 +27,8 @@ import com.ifyou.nowincinema.R;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -186,7 +189,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
                             .putString("my_city", mCityNameArray[which])
                             .apply();
                     dialog.dismiss();
-                    mMainPresenter.updateCity();
+                    mMainPresenter.updateCity(mCityArray[which]);
                 })
                 .create()
                 .show();
@@ -223,13 +226,14 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     }
 
     @Override
-    public void restartApp() {
-        //EventBus.getDefault().post(new UpdateEvent("Hello everyone!"));
-        Intent intent = new Intent(this, MainActivity.class);
+    public void restartApp(String city) {
+        EventBus.getDefault().postSticky(new UpdateFilmEvent(city));
+        EventBus.getDefault().postSticky(new UpdatePlaceEvent(city));
+        /*Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Extra.EXTRA_ID, mBottomNavigationView.getSelectedItemId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }
