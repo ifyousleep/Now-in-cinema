@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +13,10 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.MapView;
 
 import com.ifyou.nowincinema.common.BackButtonListener;
+import com.ifyou.nowincinema.common.InterfaceCommunicator;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.ui.Extra;
+import com.ifyou.nowincinema.ui.fragment.CityPickerFragment;
 import com.ifyou.nowincinema.ui.fragment.container.FilmContainerFragment;
 import com.ifyou.nowincinema.ui.fragment.container.PlaceContainerFragment;
 import com.ifyou.nowincinema.app.CinemaApp;
@@ -39,7 +40,7 @@ import ru.terrakok.cicerone.commands.Back;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Replace;
 
-public class MainActivity extends MvpAppCompatActivity implements MainView, RouterProvider {
+public class MainActivity extends MvpAppCompatActivity implements MainView, RouterProvider, InterfaceCommunicator {
 
     @InjectPresenter
     MainPresenter mMainPresenter;
@@ -58,6 +59,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
 
     private FilmContainerFragment mFilmContainerFragment;
     private PlaceContainerFragment mPlaceContainerFragment;
+    private static final String DIALOG_CITY = "DialogCity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,21 +177,21 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
     }
 
     private void enableDialog() {
+        FragmentManager manager = getSupportFragmentManager();
+        CityPickerFragment dialog = new CityPickerFragment();
+        dialog.show(manager, DIALOG_CITY);
+    }
+
+    @Override
+    public void sendRequestCode(int which) {
         String[] mCityArray = getResources().getStringArray(R.array.city_id);
         String[] mCityNameArray = getResources().getStringArray(R.array.city_actions);
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.city)
-                .setItems(R.array.city_actions, (dialog, which) -> {
-                    mSharedPrefs
-                            .edit()
-                            .putString("city", mCityArray[which])
-                            .putString("my_city", mCityNameArray[which])
-                            .apply();
-                    dialog.dismiss();
-                    mMainPresenter.updateCity();
-                })
-                .create()
-                .show();
+        mSharedPrefs
+                .edit()
+                .putString("city", mCityArray[which])
+                .putString("my_city", mCityNameArray[which])
+                .apply();
+        mMainPresenter.updateCity();
     }
 
     private void setupBottomNavigationView() {
@@ -224,7 +226,6 @@ public class MainActivity extends MvpAppCompatActivity implements MainView, Rout
 
     @Override
     public void restartApp() {
-        //EventBus.getDefault().post(new UpdateEvent("Hello everyone!"));
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Extra.EXTRA_ID, mBottomNavigationView.getSelectedItemId());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP

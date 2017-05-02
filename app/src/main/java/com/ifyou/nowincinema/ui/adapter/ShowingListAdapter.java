@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
  * Created by Baranov on 13.04.2017.
@@ -79,6 +80,7 @@ public class ShowingListAdapter extends RecyclerBindableAdapter<Showings, Showin
 
             Picasso.with(imageView.getContext())
                     .load(item.getPosterUrl())
+                    .transform(new BlurTransformation(imageView.getContext(), 15, 1))
                     .into(imageView);
             ViewCompat.setTransitionName(imageView, item.getId() + "_image");
         }

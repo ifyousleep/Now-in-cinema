@@ -101,9 +101,4 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         mMovieListPresenter.onBackPressed();
         return true;
     }
-
-    /*@Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateEvent(UpdateEvent event) {
-        mMovieListPresenter.updateData(1);
-    }*/
 }

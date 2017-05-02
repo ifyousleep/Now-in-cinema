@@ -75,18 +75,6 @@ public abstract class ListFragment extends MvpAppCompatFragment implements BaseL
         mUnbinder.unbind();
     }
 
-    /*@Override
-    public void onStart() {
-        EventBus.getDefault().register(this);
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }*/
-
     @Override
     public void activateLastItemViewListener() {
         enableSearchOnFinish();

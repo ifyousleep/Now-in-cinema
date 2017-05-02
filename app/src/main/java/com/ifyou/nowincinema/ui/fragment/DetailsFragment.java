@@ -34,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DetailsFragment extends MvpAppCompatFragment implements DetailsView, BackButtonListener {
 
@@ -101,6 +102,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void showPoster(String url) {
         Picasso.with(getContext())
                 .load(url)
+                .transform(new BlurTransformation(getActivity(), 15, 1))
                 .noFade()
                 .into(poster, new Callback() {
                     @Override
