@@ -10,9 +10,9 @@ import android.os.Parcelable;
 public class PlaceObject implements Parcelable {
 
     private String mName;
-    private Double mLat;
-    private Double mLon;
-    private String mAddress;
+    private final Double mLat;
+    private final Double mLon;
+    private final String mAddress;
 
     public PlaceObject(String name, Double lat, Double lon, String address) {
         mName = name;

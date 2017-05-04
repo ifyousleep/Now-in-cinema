@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class PosterActivity extends MvpAppCompatActivity implements PosterView {
@@ -56,7 +57,7 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
     public void showPoster(String url) {
         Picasso.with(this)
                 .load(url)
-                .transform(new BlurTransformation(this, 15, 1))
+                .transform(new BlurTransformation(this))
                 .into(mTouchImageView, new Callback() {
                     @Override
                     public void onSuccess() {

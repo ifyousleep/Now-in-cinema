@@ -6,14 +6,14 @@ package com.ifyou.nowincinema.presentation.vo;
 
 public class Details {
 
-    private String mAbout;
-    private String mPosterUrl;
-    private String mTitle;
-    private Integer mYear;
-    private Double mImdb;
-    private String mDirector;
-    private String mStars;
-    private String mCountry;
+    private final String mAbout;
+    private final String mPosterUrl;
+    private final String mTitle;
+    private final Integer mYear;
+    private final Double mImdb;
+    private final String mDirector;
+    private final String mStars;
+    private final String mCountry;
 
     public Details(String about, String posterUrl, String title, Integer year,
                    Double imdb, String director, String stars, String country) {

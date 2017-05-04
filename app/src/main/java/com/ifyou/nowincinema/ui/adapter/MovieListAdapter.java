@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
@@ -61,7 +62,7 @@ public class MovieListAdapter extends RecyclerBindableAdapter<Movies, MovieListA
             text.setText(item.getTitle());
             Picasso.with(imageView.getContext())
                     .load(item.getPosterUrl())
-                    .transform(new BlurTransformation(imageView.getContext(), 15, 1))
+                    .transform(new BlurTransformation(imageView.getContext()))
                     .into(imageView);
             ViewCompat.setTransitionName(imageView, item.getId() + "_image");
         }

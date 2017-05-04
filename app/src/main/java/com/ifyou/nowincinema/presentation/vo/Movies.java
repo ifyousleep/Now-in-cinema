@@ -6,9 +6,9 @@ package com.ifyou.nowincinema.presentation.vo;
 
 public class Movies {
 
-    private String mTitle;
-    private String mPosterUrl;
-    private Integer mId;
+    private final String mTitle;
+    private final String mPosterUrl;
+    private final Integer mId;
 
     public Movies(String title, String posterUrl, Integer id) {
         mTitle = title;

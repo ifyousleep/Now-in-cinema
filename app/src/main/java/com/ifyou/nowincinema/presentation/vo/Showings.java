@@ -6,16 +6,16 @@ package com.ifyou.nowincinema.presentation.vo;
 
 public class Showings {
 
-    private Integer mId;
-    private String mMovieTitle;
-    private String mPlaceTitle;
-    private String mPosterUrl;
-    private Integer mMovieId;
-    private Integer mPlaceId;
-    private Integer mTime;
-    private Double mLat;
-    private Double mLon;
-    private String mAddress;
+    private final Integer mId;
+    private final String mMovieTitle;
+    private final String mPlaceTitle;
+    private final String mPosterUrl;
+    private final Integer mMovieId;
+    private final Integer mPlaceId;
+    private final Integer mTime;
+    private final Double mLat;
+    private final Double mLon;
+    private final String mAddress;
 
     public Showings(Integer id, String movieTitle, String placeTitle,
                     String posterUrl, Integer movieId, Integer placeId,

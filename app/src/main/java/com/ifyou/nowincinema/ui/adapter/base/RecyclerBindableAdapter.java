@@ -27,13 +27,13 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
     private static final int TYPE_FOOTER = 7899;
     private static final String P_ITEMS = "RecyclerBindableAdapter.items";
 
-    private ArrayList<View> headers = new ArrayList<>();
-    private ArrayList<View> footers = new ArrayList<>();
+    private final ArrayList<View> headers = new ArrayList<>();
+    private final ArrayList<View> footers = new ArrayList<>();
     private ArrayList<T> items = new ArrayList<>();
 
     private RecyclerView.LayoutManager manager;
     private LayoutInflater inflater;
-    private GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
+    private final GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
         @Override
         public int getSpanSize(int position) {
             return getGridSpan(position);

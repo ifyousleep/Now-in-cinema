@@ -12,7 +12,7 @@ android {
         applicationId "com.ifyou.nowincinema"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 4
+        versionCode 5
         versionName "0.92"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -35,12 +35,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     testCompile 'junit:junit:4.12'
     // moxy
-    compile 'com.arello-mobile:moxy:1.5.1'
-    provided 'com.arello-mobile:moxy-compiler:1.5.1'
-    compile 'com.arello-mobile:moxy-app-compat:1.5.1'
+    compile 'com.arello-mobile:moxy:1.5.2'
+    provided 'com.arello-mobile:moxy-compiler:1.5.2'
+    compile 'com.arello-mobile:moxy-app-compat:1.5.2'
     // rx
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.9'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     // retrofit
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'

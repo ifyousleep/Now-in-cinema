@@ -35,13 +35,13 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
     @Inject
     CinemaService mCinemaService;
 
-    private Router router;
+    private final Router router;
     private boolean mIsInLoading;
     private Disposable subscription = Disposables.empty();
     private Integer mPage = 1;
     private Integer mCountList = 0;
-    private List<Showings> mResultsItems = new ArrayList<>();
-    private String mCity;
+    private final List<Showings> mResultsItems = new ArrayList<>();
+    private final String mCity;
     private String mTime;
 
     public ShowingListPresenter(String city, Router router) {
