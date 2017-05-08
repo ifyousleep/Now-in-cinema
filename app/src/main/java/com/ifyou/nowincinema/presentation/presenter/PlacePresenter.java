@@ -1,9 +1,9 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
 
-import com.ifyou.nowincinema.presentation.view.PlaceView;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.presentation.view.PlaceView;
 
 import ru.terrakok.cicerone.Router;
 
@@ -19,7 +19,6 @@ public class PlacePresenter extends MvpPresenter<PlaceView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().showMap();
     }
 
     public void onBackPressed() {

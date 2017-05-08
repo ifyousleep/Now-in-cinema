@@ -18,7 +18,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
@@ -31,6 +30,11 @@ public class ShowingListAdapter extends RecyclerBindableAdapter<Showings, Showin
 
     public ShowingListAdapter(ItemClickSupport.OnRowClickListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    protected void onRecycledItemViewHolder(LinearViewHolder vh) {
+
     }
 
     @Override

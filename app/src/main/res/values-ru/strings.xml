@@ -14,6 +14,8 @@
     <string name="film">Фильмы</string>
     <string name="place">Показы</string>
 
+    <string name="movie_show">Показы фильма</string>
+
     <string-array name="city_actions">
         <item>Все города</item>
         <item>Санкт-Петербург</item>

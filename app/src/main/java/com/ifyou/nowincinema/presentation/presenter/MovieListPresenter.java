@@ -1,31 +1,27 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
-import com.ifyou.nowincinema.model.dto.movies.ListMovies;
-import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
-import com.ifyou.nowincinema.presentation.mappers.MoviesMapper;
-import com.ifyou.nowincinema.presentation.vo.Movies;
-import com.ifyou.nowincinema.ui.fragment.TransitionObject;
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
+import com.ifyou.nowincinema.model.dto.movies.ListMovies;
+import com.ifyou.nowincinema.model.dto.movies.ResultsItem;
+import com.ifyou.nowincinema.presentation.mappers.MoviesMapper;
 import com.ifyou.nowincinema.presentation.view.MovieListView;
+import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.Screens;
-
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
-
 import ru.terrakok.cicerone.Router;
-
 import timber.log.Timber;
 
 @InjectViewState
@@ -64,10 +60,6 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         Timber.d(mCity);
     }
 
-    /*public void updateData(int page) {
-        loadData(page);
-    }*/
-
     public void onLastItemViewed() {
         mPage += 1;
         getViewState().disableLastItemViewListener();
@@ -89,13 +81,13 @@ public class MovieListPresenter extends MvpPresenter<MovieListView> {
         }
         subscription = observable
                 .compose(Utils.applySchedulers())
-                .retryWhen(errors ->
+                /*.retryWhen(errors ->
                         errors
                                 .zipWith(
                                         Observable.range(1, 3), (n, i) -> i)
                                 .flatMap(
                                         retryCount -> Observable.timer(retryCount,
-                                                TimeUnit.SECONDS)))
+                                                TimeUnit.SECONDS)))*/
                 .subscribe(resp -> {
                     mCountList = resp.getCount() - 1;
                     onLoadingFinish();

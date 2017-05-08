@@ -13,11 +13,14 @@ public class TransitionObject implements Serializable {
     private View view;
     private Integer integer;
     private String url;
+    private String city;
 
-    public TransitionObject(View view, Integer integer, String url) {
+    public TransitionObject(View view, Integer integer,
+                            String url, String city) {
         this.view = view;
         this.integer = integer;
         this.url = url;
+        this.city = city;
 
     }
 
@@ -43,5 +46,13 @@ public class TransitionObject implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

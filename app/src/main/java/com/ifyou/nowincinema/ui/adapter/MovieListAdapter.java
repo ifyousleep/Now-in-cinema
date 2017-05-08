@@ -9,12 +9,10 @@ import android.widget.TextView;
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.presentation.vo.Movies;
 import com.ifyou.nowincinema.ui.adapter.base.RecyclerBindableAdapter;
-
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 /**
@@ -31,6 +29,11 @@ public class MovieListAdapter extends RecyclerBindableAdapter<Movies, MovieListA
     @Override
     protected LinearViewHolder viewHolder(View view, int type) {
         return new LinearViewHolder(view);
+    }
+
+    @Override
+    protected void onRecycledItemViewHolder(LinearViewHolder vh) {
+
     }
 
     @Override

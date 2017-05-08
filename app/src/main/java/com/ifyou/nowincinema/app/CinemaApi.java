@@ -2,6 +2,7 @@ package com.ifyou.nowincinema.app;
 
 import com.ifyou.nowincinema.model.dto.details.DetailsMovie;
 import com.ifyou.nowincinema.model.dto.movies.ListMovies;
+import com.ifyou.nowincinema.model.dto.movieshow.MovieShowList;
 import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
 
 import io.reactivex.Observable;
@@ -28,5 +29,12 @@ public interface CinemaApi {
                                          @Query("expand") String expand,
                                          @Query("page") Integer page,
                                          @Query("location") String location);
+
+    @GET("/public-api/v1.3/movies/{movie_id}/showings/")
+    Observable<MovieShowList> getMovieShowings(@Path("movie_id") Integer movie_id,
+                                               @Query("actual_since") String actual_since,
+                                               @Query("expand") String expand,
+                                               @Query("page") Integer page,
+                                               @Query("location") String location);
 
 }

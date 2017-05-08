@@ -9,45 +9,54 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.presentation.view.PlaceView;
 import com.ifyou.nowincinema.presentation.presenter.PlacePresenter;
-
-import com.arellomobile.mvp.MvpAppCompatFragment;
-
-import com.ifyou.nowincinema.R;
-
-import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.ifyou.nowincinema.presentation.view.PlaceView;
 import com.ifyou.nowincinema.presentation.vo.PlaceObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, BackButtonListener {
+public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, BackButtonListener,
+        OnMapReadyCallback {
 
+    private final OnMapReadyCallback mInitialOnMapReadyCallback =
+            (GoogleMap googleMap) -> {
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+                googleMap.getUiSettings().setMapToolbarEnabled(false);
+            };
     @InjectPresenter
     PlacePresenter mPlacePresenter;
-
     @BindView(R.id.textName)
     TextView textName;
     @BindView(R.id.mapView)
     MapView mMapView;
     @BindView(R.id.textAddress)
     TextView textAddress;
-
     private Unbinder mUnbinder;
     private GoogleMap googleMap;
     private Double mLat;
     private Double mLon;
+
+    public static PlaceFragment newInstance(PlaceObject placeObject) {
+        PlaceFragment fragment = new PlaceFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("PLACE", placeObject);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @ProvidePresenter
     PlacePresenter providePlacePresenter() {
@@ -60,21 +69,20 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
         setHasOptionsMenu(true);
     }
 
-    public static PlaceFragment newInstance(PlaceObject placeObject) {
-        PlaceFragment fragment = new PlaceFragment();
-        Bundle args = new Bundle();
-        args.putParcelable("PLACE", placeObject);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_place, container, false);
         mUnbinder = ButterKnife.bind(this, v);
-        mMapView.onCreate(savedInstanceState);
+
+        mMapView.setVisibility(View.INVISIBLE);
+        initializeMapView(mMapView);
         return v;
+    }
+
+    private void initializeMapView(MapView mapView) {
+        mapView.onCreate(null);
+        mapView.getMapAsync(mInitialOnMapReadyCallback);
     }
 
     @Override
@@ -91,24 +99,28 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
             textName.setText(name.toUpperCase());
             textAddress.setText(address);
         }
+
+        mMapView.getMapAsync(this);
     }
 
     @Override
-    public void showMap() {
-        mMapView.getMapAsync(mMap -> {
-            googleMap = mMap;
-            LatLng cord = new LatLng(mLat, mLon);
-            googleMap.addMarker(new MarkerOptions()
-                    .position(cord)
-                    .title(textName.getText().toString()));
-            CameraPosition cameraPosition = new CameraPosition
-                    .Builder()
-                    .target(cord)
-                    .zoom(14)
-                    .build();
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            googleMap.getUiSettings().setZoomGesturesEnabled(true);
-        });
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        showMap();
+    }
+
+    private void showMap() {
+        if (googleMap == null) {
+            return;
+        }
+        LatLng cord = new LatLng(mLat, mLon);
+        googleMap.addMarker(new MarkerOptions()
+                .position(cord)
+                .title(textName.getText().toString()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cord, 14f));
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMapView.setVisibility(View.VISIBLE);
+        googleMap.getUiSettings().setMapToolbarEnabled(true);
     }
 
     @Override
@@ -128,23 +140,5 @@ public class PlaceFragment extends MvpAppCompatFragment implements PlaceView, Ba
         super.onDestroyView();
         mMapView.onDestroy();
         mUnbinder.unbind();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
     }
 }

@@ -5,19 +5,18 @@ import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 
-import com.ifyou.nowincinema.common.BackButtonListener;
-import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.presentation.view.MovieListView;
-import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
-import com.ifyou.nowincinema.presentation.vo.Movies;
-import com.ifyou.nowincinema.ui.adapter.base.GridSpacingItemDecoration;
-import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
-import com.ifyou.nowincinema.ui.adapter.MovieListAdapter;
-import com.ifyou.nowincinema.ui.fragment.TransitionObject;
-import com.ifyou.nowincinema.R;
-
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.ifyou.nowincinema.R;
+import com.ifyou.nowincinema.common.BackButtonListener;
+import com.ifyou.nowincinema.common.RouterProvider;
+import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
+import com.ifyou.nowincinema.presentation.view.MovieListView;
+import com.ifyou.nowincinema.presentation.vo.Movies;
+import com.ifyou.nowincinema.ui.adapter.MovieListAdapter;
+import com.ifyou.nowincinema.ui.adapter.base.GridSpacingItemDecoration;
+import com.ifyou.nowincinema.ui.adapter.base.ItemClickSupport;
+import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
 import java.util.List;
 
@@ -31,12 +30,6 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
     private MovieListAdapter mAdapter;
     private GridLayoutManager mGridLayoutManager;
 
-    @ProvidePresenter
-    MovieListPresenter provideMovieListPresenter() {
-        String mCity = getArguments().getString(sCity);
-        return new MovieListPresenter(mCity, ((RouterProvider) getParentFragment()).getRouter());
-    }
-
     public static MovieListFragment newInstance(String city, String myCity) {
         MovieListFragment fragment = new MovieListFragment();
         Bundle args = new Bundle();
@@ -44,6 +37,12 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
         args.putString(sMyCity, myCity);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @ProvidePresenter
+    MovieListPresenter provideMovieListPresenter() {
+        String mCity = getArguments().getString(sCity);
+        return new MovieListPresenter(mCity, ((RouterProvider) getParentFragment()).getRouter());
     }
 
     @Override
@@ -68,7 +67,7 @@ public class MovieListFragment extends ListFragment implements MovieListView, Ba
 
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
                 (recyclerView, pos, v) ->
-                        mMovieListPresenter.clickItem(new TransitionObject(v.findViewById(R.id.image), pos, ""))
+                        mMovieListPresenter.clickItem(new TransitionObject(v.findViewById(R.id.image), pos, "", null))
         );
     }
 

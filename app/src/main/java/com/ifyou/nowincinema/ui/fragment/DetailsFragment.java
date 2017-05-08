@@ -3,6 +3,7 @@ package com.ifyou.nowincinema.ui.fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.text.Html;
 import android.text.Spanned;
@@ -17,31 +18,28 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.MvpAppCompatFragment;
+import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
-import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
+import com.ifyou.nowincinema.presentation.view.DetailsView;
 import com.ifyou.nowincinema.presentation.vo.Details;
-import com.ifyou.nowincinema.R;
-
-import com.arellomobile.mvp.MvpAppCompatFragment;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
-import com.arellomobile.mvp.presenter.InjectPresenter;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DetailsFragment extends MvpAppCompatFragment implements DetailsView, BackButtonListener {
 
+    private static String sCity = "city";
     @InjectPresenter
     DetailsPresenter mDetailsPresenter;
-
     @BindView(R.id.textAbout)
     TextView textAbout;
     @BindView(R.id.progressBar)
@@ -50,21 +48,23 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     ImageView poster;
     @BindView(R.id.textName)
     TextView textTitle;
-
+    @BindView(R.id.fab)
+    FloatingActionButton mFloatingActionButton;
     private Unbinder mUnbinder;
 
-    @ProvidePresenter
-    DetailsPresenter provideDetailsPresenter() {
-        return new DetailsPresenter(((RouterProvider) getParentFragment()).getRouter());
-    }
-
-    public static DetailsFragment newInstance(String url, Integer id) {
+    public static DetailsFragment newInstance(String url, Integer id, String city) {
         DetailsFragment fragment = new DetailsFragment();
         Bundle args = new Bundle();
         args.putString("URL", url);
         args.putInt("ID", id);
+        args.putString(sCity, city);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @ProvidePresenter
+    DetailsPresenter provideDetailsPresenter() {
+        return new DetailsPresenter(((RouterProvider) getParentFragment()).getRouter(), getArguments().getInt("ID"));
     }
 
     @Override
@@ -81,7 +81,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_details, container, false);
+        View v = inflater.inflate(R.layout.fragment_details, container, false);
         mUnbinder = ButterKnife.bind(this, v);
         return v;
     }
@@ -90,19 +90,20 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.app_detail);
-        if (savedInstanceState == null) {
-            mDetailsPresenter.loadData(getArguments().getInt("ID"));
-            mDetailsPresenter.showPoster(getArguments().getString("URL"));
-        }
         ViewCompat.setTransitionName(poster, "image");
-        TransitionObject transitionObject = new TransitionObject(poster, 0, getArguments().getString("URL"));
+        TransitionObject transitionObject = new TransitionObject(poster, getArguments().getInt("ID"),
+                getArguments().getString("URL"), getArguments().getString(sCity));
         poster.setOnClickListener(v -> mDetailsPresenter.showTouch(transitionObject));
+
+        mFloatingActionButton.setOnClickListener(
+                v -> mDetailsPresenter.showMovie(transitionObject)
+        );
     }
 
     @Override
-    public void showPoster(String url) {
+    public void showPoster() {
         Picasso.with(getContext())
-                .load(url)
+                .load(getArguments().getString("URL"))
                 .transform(new BlurTransformation(getActivity()))
                 .noFade()
                 .into(poster, new Callback() {

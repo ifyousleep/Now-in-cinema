@@ -4,6 +4,4 @@ import com.arellomobile.mvp.MvpView;
 
 public interface PlaceView extends MvpView {
 
-    void showMap();
-
 }

@@ -11,6 +11,7 @@
     <string name="city">City</string>
     <string name="film">Film</string>
     <string name="place">Place</string>
+    <string name="movie_show">Showings of movie</string>
 
     <string-array name="city_actions">
         <item>All cities</item>

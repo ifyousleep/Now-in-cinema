@@ -10,6 +10,7 @@ import com.ifyou.nowincinema.model.CinemaService;
 import com.ifyou.nowincinema.presentation.presenter.DetailsPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MainPresenter;
 import com.ifyou.nowincinema.presentation.presenter.MovieListPresenter;
+import com.ifyou.nowincinema.presentation.presenter.MovieShowPresenter;
 import com.ifyou.nowincinema.presentation.presenter.ShowingListPresenter;
 import com.ifyou.nowincinema.ui.activity.MainActivity;
 import com.ifyou.nowincinema.ui.fragment.container.ContainerFragment;
@@ -44,6 +45,8 @@ public interface AppComponent {
     void inject (MainPresenter mainPresenter);
 
     void inject (ShowingListPresenter showingListPresenter);
+
+    void inject(MovieShowPresenter movieShowPresenter);
 
     void inject (ContainerFragment containerFragment);
 

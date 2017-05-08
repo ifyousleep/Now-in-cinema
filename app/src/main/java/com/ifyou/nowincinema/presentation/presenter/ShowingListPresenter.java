@@ -1,5 +1,7 @@
 package com.ifyou.nowincinema.presentation.presenter;
 
+import com.arellomobile.mvp.InjectViewState;
+import com.arellomobile.mvp.MvpPresenter;
 import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.Utils;
 import com.ifyou.nowincinema.model.CinemaService;
@@ -7,41 +9,34 @@ import com.ifyou.nowincinema.model.dto.showings.ResultsItem;
 import com.ifyou.nowincinema.model.dto.showings.ShowingsList;
 import com.ifyou.nowincinema.presentation.mappers.ShowingsMappers;
 import com.ifyou.nowincinema.presentation.view.ShowingListView;
-import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.presentation.vo.PlaceObject;
+import com.ifyou.nowincinema.presentation.vo.Showings;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
 
-import com.arellomobile.mvp.InjectViewState;
-import com.arellomobile.mvp.MvpPresenter;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
-
 import ru.terrakok.cicerone.Router;
-
 import timber.log.Timber;
 
 @InjectViewState
 public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
 
+    private final Router router;
+    private final List<Showings> mResultsItems = new ArrayList<>();
+    private final String mCity;
     @Inject
     CinemaService mCinemaService;
-
-    private final Router router;
     private boolean mIsInLoading;
     private Disposable subscription = Disposables.empty();
     private Integer mPage = 1;
     private Integer mCountList = 0;
-    private final List<Showings> mResultsItems = new ArrayList<>();
-    private final String mCity;
     private String mTime;
 
     public ShowingListPresenter(String city, Router router) {
@@ -85,13 +80,13 @@ public class ShowingListPresenter extends MvpPresenter<ShowingListView> {
         }
         subscription = observable
                 .compose(Utils.applySchedulers())
-                .retryWhen(errors ->
+                /*.retryWhen(errors ->
                         errors
                                 .zipWith(
                                         Observable.range(1, 3), (n, i) -> i)
                                 .flatMap(
                                         retryCount -> Observable.timer(retryCount,
-                                                TimeUnit.SECONDS)))
+                                                TimeUnit.SECONDS)))*/
                 .subscribe(resp -> {
                     mCountList = resp.getCount() - 1;
                     onLoadingFinish();

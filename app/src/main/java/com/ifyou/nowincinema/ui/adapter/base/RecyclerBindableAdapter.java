@@ -32,13 +32,13 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
     private ArrayList<T> items = new ArrayList<>();
 
     private RecyclerView.LayoutManager manager;
-    private LayoutInflater inflater;
     private final GridLayoutManager.SpanSizeLookup spanSizeLookup = new GridLayoutManager.SpanSizeLookup() {
         @Override
         public int getSpanSize(int position) {
             return getGridSpan(position);
         }
     };
+    private LayoutInflater inflater;
 
     public int getRealItemCount() {
         return items.size();
@@ -125,6 +125,15 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
             return (VH) new HeaderFooterViewHolder(frameLayout);
         }
     }
+
+    @Override
+    public void onViewRecycled(VH vh) {
+        if (!(vh instanceof HeaderFooterViewHolder)) {
+            onRecycledItemViewHolder(vh);
+        }
+    }
+
+    abstract protected void onRecycledItemViewHolder(VH viewHolder);
 
     private void setHeaderFooterLayoutParams(ViewGroup viewGroup) {
         ViewGroup.LayoutParams layoutParams;
@@ -319,18 +328,6 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
     @LayoutRes
     int layoutId(int type);
 
-    interface SpanItemInterface {
-        int getGridSpan();
-    }
-
-    //our header/footer RecyclerView.ViewHolder is just a FrameLayout
-    private static class HeaderFooterViewHolder extends RecyclerView.ViewHolder {
-
-        private HeaderFooterViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
-
     public Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
         if (items.size() > 0 && (items.get(0) instanceof Parcelable
@@ -347,6 +344,18 @@ public abstract class RecyclerBindableAdapter<T, VH extends RecyclerView.ViewHol
             if (bundle.containsKey(P_ITEMS)) {
                 items = (ArrayList<T>) bundle.getSerializable(P_ITEMS);
             }
+        }
+    }
+
+    interface SpanItemInterface {
+        int getGridSpan();
+    }
+
+    //our header/footer RecyclerView.ViewHolder is just a FrameLayout
+    private static class HeaderFooterViewHolder extends RecyclerView.ViewHolder {
+
+        private HeaderFooterViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }

@@ -17,15 +17,16 @@ import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.common.BackButtonListener;
 import com.ifyou.nowincinema.common.RouterProvider;
 import com.ifyou.nowincinema.di.LocalCiceroneHolder;
-import com.ifyou.nowincinema.ui.Extra;
 import com.ifyou.nowincinema.presentation.vo.PlaceObject;
+import com.ifyou.nowincinema.ui.Extra;
 import com.ifyou.nowincinema.ui.Screens;
 import com.ifyou.nowincinema.ui.activity.PosterActivity;
 import com.ifyou.nowincinema.ui.fragment.DetailsFragment;
-import com.ifyou.nowincinema.ui.fragment.list.MovieListFragment;
 import com.ifyou.nowincinema.ui.fragment.PlaceFragment;
-import com.ifyou.nowincinema.ui.fragment.list.ShowingListFragment;
 import com.ifyou.nowincinema.ui.fragment.TransitionObject;
+import com.ifyou.nowincinema.ui.fragment.list.MovieListFragment;
+import com.ifyou.nowincinema.ui.fragment.list.MovieShowFragment;
+import com.ifyou.nowincinema.ui.fragment.list.ShowingListFragment;
 
 import javax.inject.Inject;
 
@@ -42,13 +43,11 @@ import ru.terrakok.cicerone.commands.Forward;
 
 public class ContainerFragment extends Fragment implements RouterProvider, BackButtonListener {
 
+    public static final String EXTRA_NAME = "extra_name";
     @Inject
     protected LocalCiceroneHolder ciceroneHolder;
-
     @Inject
     protected SharedPreferences mSharedPrefs;
-
-    public static final String EXTRA_NAME = "extra_name";
     private Navigator navigator;
 
     public Integer getContainerName() {
@@ -104,17 +103,23 @@ public class ContainerFragment extends Fragment implements RouterProvider, BackB
 
                 @Override
                 protected Fragment createFragment(String screenKey, Object data) {
-                    String myCity = mSharedPrefs.getString("my_city", "");
+                    String nameCity = mSharedPrefs.getString("my_city", "");
+                    String mCity = mSharedPrefs.getString("city", "");
                     switch (screenKey) {
                         case Screens.LIST_SCREEN:
-                            return MovieListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
+                            return MovieListFragment.newInstance(mCity, nameCity);
                         case Screens.SHOWING_SCREEN:
-                            return ShowingListFragment.newInstance(mSharedPrefs.getString("city", ""), myCity);
+                            return ShowingListFragment.newInstance(mCity, nameCity);
                         case Screens.DETAILS_SCREEN:
-                            TransitionObject transitionObject = (TransitionObject) data;
-                            return DetailsFragment.newInstance(transitionObject.getUrl(), transitionObject.getInteger());
+                            TransitionObject transitionD = (TransitionObject) data;
+                            return DetailsFragment.newInstance(transitionD.getUrl(),
+                                    transitionD.getInteger(), mCity);
                         case Screens.PLACE_SCREEN:
                             return PlaceFragment.newInstance((PlaceObject) data);
+                        case Screens.MOVIE_SHOWING:
+                            TransitionObject transitionS = (TransitionObject) data;
+                            return MovieShowFragment.newInstance(transitionS.getCity(),
+                                    transitionS.getInteger());
                     }
                     return null;
                 }
