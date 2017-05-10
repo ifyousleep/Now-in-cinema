@@ -7,21 +7,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.ifyou.nowincinema.presentation.view.PosterView;
-import com.ifyou.nowincinema.presentation.presenter.PosterPresenter;
-import com.ifyou.nowincinema.R;
-import com.ifyou.nowincinema.ui.Extra;
-
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-
+import com.ifyou.nowincinema.R;
+import com.ifyou.nowincinema.presentation.presenter.PosterPresenter;
+import com.ifyou.nowincinema.presentation.view.PosterView;
+import com.ifyou.nowincinema.ui.Extra;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class PosterActivity extends MvpAppCompatActivity implements PosterView {
 
@@ -57,7 +53,7 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
     public void showPoster(String url) {
         Picasso.with(this)
                 .load(url)
-                .transform(new BlurTransformation(this))
+                //.transform(new BlurTransformation(this))
                 .into(mTouchImageView, new Callback() {
                     @Override
                     public void onSuccess() {

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="item_offset">2dp</dimen>
     <dimen name="detail_padding">16dp</dimen>
+    <dimen name="action_button_margin">0dp</dimen>
 </resources>

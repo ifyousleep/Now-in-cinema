@@ -12,8 +12,8 @@ android {
         applicationId "com.ifyou.nowincinema"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 7
-        versionName "0.93"
+        versionCode 9
+        versionName "0.95"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -57,11 +57,9 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.10'
     // picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'jp.wasabeef:picasso-transformations:2.1.2'
+    // compile 'jp.wasabeef:picasso-transformations:2.1.2'
     // timber
     compile 'com.jakewharton.timber:timber:4.5.1'
     // cicerone
     compile 'ru.terrakok.cicerone:cicerone:1.2.1'
-    // eventbus
-    // compile 'org.greenrobot:eventbus:3.0.0'
 }
