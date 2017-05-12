@@ -1,9 +1,10 @@
 package com.ifyou.nowincinema.di.modules;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ifyou.nowincinema.BuildConfig;
-import com.ifyou.nowincinema.app.CinemaApp;
 import com.ifyou.nowincinema.model.ResponseCacheInterceptor;
 
 import java.io.File;
@@ -13,12 +14,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-
 import io.reactivex.schedulers.Schedulers;
-
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -39,7 +37,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(@Named("serverUrl") String serverUrl, Retrofit.Builder builder, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(@Named("serverUrl") String serverUrl, Retrofit.Builder builder, OkHttpClient okHttpClient) {
         return builder
                 .baseUrl(serverUrl)
                 .client(okHttpClient)
@@ -70,8 +68,8 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    Cache provideHttpCache() {
-        return new Cache(new File(CinemaApp.getContext().getCacheDir(),
+    Cache provideHttpCache(Context context) {
+        return new Cache(new File(context.getCacheDir(),
                 "apiResponses"), 5 * 1024 * 1024);
     }
 

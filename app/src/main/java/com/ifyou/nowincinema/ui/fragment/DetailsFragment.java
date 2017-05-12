@@ -41,7 +41,7 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
     DetailsPresenter mDetailsPresenter;
     @BindView(R.id.textAbout)
     TextView textAbout;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.activity_poster_progress_bar)
     ProgressBar progressBar;
     @BindView(R.id.image)
     ImageView poster;
@@ -92,10 +92,10 @@ public class DetailsFragment extends MvpAppCompatFragment implements DetailsView
         ViewCompat.setTransitionName(poster, "image");
         TransitionObject transitionObject = new TransitionObject(poster, getArguments().getInt("ID"),
                 getArguments().getString("URL"), getArguments().getString(sCity));
-        poster.setOnClickListener(v -> mDetailsPresenter.showTouch(transitionObject));
-
-        mFloatingActionButton.setOnClickListener(
-                v -> mDetailsPresenter.showMovie(transitionObject)
+        poster.setOnClickListener(v ->
+                mDetailsPresenter.showTouch(transitionObject));
+        mFloatingActionButton.setOnClickListener(v ->
+                mDetailsPresenter.showMovie(transitionObject)
         );
     }
 

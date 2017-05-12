@@ -24,9 +24,9 @@ public class PosterActivity extends MvpAppCompatActivity implements PosterView {
     @InjectPresenter
     PosterPresenter mPosterPresenter;
 
-    @BindView(R.id.touch_image)
+    @BindView(R.id.activity_poster_touch_image)
     ImageView mTouchImageView;
-    @BindView(R.id.progressBar)
+    @BindView(R.id.activity_poster_progress_bar)
     ProgressBar progressBar;
 
     @Override

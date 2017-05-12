@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
-
 import com.ifyou.nowincinema.R;
 import com.ifyou.nowincinema.presentation.view.BaseListView;
 
@@ -23,15 +22,14 @@ import butterknife.Unbinder;
 
 public abstract class ListFragment extends MvpAppCompatFragment implements BaseListView {
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-
-    private Unbinder mUnbinder;
     static String sCity = "city";
     static String sMyCity = "my_city";
     protected View mFooter;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    private Unbinder mUnbinder;
 
     protected abstract Integer setId();
 

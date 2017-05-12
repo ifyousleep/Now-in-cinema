@@ -12,8 +12,8 @@ android {
         applicationId "com.ifyou.nowincinema"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 9
-        versionName "0.95"
+        versionCode 10
+        versionName "0.96"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
