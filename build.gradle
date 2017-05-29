@@ -19,6 +19,12 @@ allprojects {
     }
 }
 
+ext.support_version = "25.3.1"
+ext.dagger_version = "2.11"
+ext.retrofit_version = "2.3.0"
+ext.moxy_version = "1.5.3"
+ext.butterknife_version = "8.6.0"
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

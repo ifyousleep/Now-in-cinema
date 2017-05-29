@@ -49,7 +49,6 @@ public interface AppComponent {
     interface Builder {
         @BindsInstance
         Builder application(CinemaApp application);
-
         AppComponent build();
     }
 
